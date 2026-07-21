@@ -136,29 +136,36 @@
     html { scroll-behavior:auto; }
   }
   :focus-visible { outline:2px solid var(--cyan); outline-offset:3px; }
+  .nav-right{display:flex;align-items:center;gap:16px;}
+  @media(max-width:680px){.hnav{display:none;}}
+  .lang{display:flex;gap:4px;flex:none;}
+  .lang button{font-family:"Share Tech Mono",monospace;font-size:11.5px;letter-spacing:0.04em;color:var(--dim);background:none;border:1px solid var(--line);padding:4px 7px;cursor:pointer;transition:color .16s,border-color .16s;}
+  .lang button:hover{color:var(--text);}
+  .lang button.active{color:var(--cyan);border-color:var(--cyan);text-shadow:0 0 8px rgba(38,224,230,0.5);}
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap nav">
-    <a class="brand" href="index.html"><b>//</b> Nemo</a>
-    <nav class="hnav">
-      <a class="opt" href="price.html">[ прайс ]</a>
-      <a class="opt" href="history.html">[ история ]</a>
-      <a href="index.html">← главная</a>
-    </nav>
+    <a class="brand page" href="index.html"><b>//</b> Nemo</a>
+    <div class="nav-right">
+      <nav class="hnav">
+        <a class="opt page" href="price.html" data-i18n="nav_price">[ прайс ]</a>
+        <a class="opt page" href="history.html" data-i18n="nav_history">[ история ]</a>
+        <a class="page" href="index.html" data-i18n="nav_home">← главная</a>
+      </nav>
+      <div class="lang" id="lang"><button data-lang="ru">RU</button><button data-lang="uk">UK</button><button data-lang="en">EN</button><button data-lang="kz">KZ</button></div>
+    </div>
   </div>
 </header>
 
 <main>
   <section class="hero" style="border-top:none">
     <div class="wrap">
-      <div class="boot"><span class="blip"></span> faq.load() // частые вопросы</div>
+      <div class="boot"><span class="blip"></span> <span data-i18n="f_boot">faq.load() // частые вопросы</span></div>
       <h1 class="glitch" data-text="FAQ">FAQ</h1>
-      <p class="lede">
-        Короткие ответы на то, что чаще всего спрашивают до старта. Нет твоего вопроса — просто напиши.
-      </p>
+      <p class="lede" data-i18n="f_lede">Короткие ответы на то, что чаще всего спрашивают до старта. Нет твоего вопроса — просто напиши.</p>
     </div>
   </section>
 
@@ -166,58 +173,58 @@
     <div class="wrap">
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> Сколько стоит бот или проект?</span><span class="plus">+</span></summary>
-        <div class="faq-a">Зависит от задачи. Базовые ориентиры — на странице <a href="price.html">прайса</a>, все цены «от». Точную сумму называю после того, как разберёмся в объёме и логике. Оценка бесплатная.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q1">Сколько стоит бот или проект?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a1">Зависит от задачи. Базовые ориентиры — на странице <a href="price.html">прайса</a>, все цены «от». Точную сумму называю после того, как разберёмся в объёме и логике. Оценка бесплатная.</div>
       </details>
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> Какие сроки?</span><span class="plus">+</span></summary>
-        <div class="faq-a">Простой бот — обычно <b>1–3 дня</b>, проект с базой и логикой — от недели. Точный срок зависит от сложности и загрузки; фиксирую его до старта, чтобы не было сюрпризов.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q2">Какие сроки?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a2">Простой бот — обычно <b>1–3 дня</b>, проект с базой и логикой — от недели. Точный срок зависит от сложности и загрузки; фиксирую его до старта, чтобы не было сюрпризов.</div>
       </details>
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> Под какие площадки делаешь ботов?</span><span class="plus">+</span></summary>
-        <div class="faq-a">Telegram, Discord и другие площадки. Если не уверен, реально ли то, что ты задумал, — опиши задачу, скажу сразу.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q3">Под какие площадки делаешь ботов?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a3">Telegram, Discord и другие площадки. Если не уверен, реально ли то, что ты задумал, — опиши задачу, скажу сразу.</div>
       </details>
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> Можно без готового ТЗ?</span><span class="plus">+</span></summary>
-        <div class="faq-a">Да. Помогу сформулировать задачу из «хочу примерно вот такое». Для размытых или исследовательских задач удобнее почасовая работа.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q4">Можно без готового ТЗ?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a4">Да. Помогу сформулировать задачу из «хочу примерно вот такое». Для размытых или исследовательских задач удобнее почасовая работа.</div>
       </details>
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> Нужна предоплата?</span><span class="plus">+</span></summary>
-        <div class="faq-a">Да, <b>30–50%</b> для старта. Остаток — по факту сдачи рабочего результата, после того как ты всё проверил.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q5">Нужна предоплата?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a5">Да, <b>30–50%</b> для старта. Остаток — по факту сдачи рабочего результата, после того как ты всё проверил.</div>
       </details>
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> Кому принадлежит код?</span><span class="plus">+</span></summary>
-        <div class="faq-a">Тебе. После оплаты передаю исходники и все доступы полностью — никакой привязки ко мне.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q6">Кому принадлежит код?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a6">Тебе. После оплаты передаю исходники и все доступы полностью — никакой привязки ко мне.</div>
       </details>
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> Делаешь правки после сдачи?</span><span class="plus">+</span></summary>
-        <div class="faq-a">Да. Мелкие правки по согласованному ТЗ — в рамках заказа. Новые фичи и развитие проекта дальше — по договорённости или в формате поддержки.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q7">Делаешь правки после сдачи?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a7">Да. Мелкие правки по согласованному ТЗ — в рамках заказа. Новые фичи и развитие проекта дальше — по договорённости или в формате поддержки.</div>
       </details>
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> Можешь хостить проект у себя?</span><span class="plus">+</span></summary>
-        <div class="faq-a">Могу разместить на своей инфраструктуре — от <b>$5/мес</b>. Либо разверну на твоём сервере или VPS — это входит в разработку. Подробнее в блоке хостинга на <a href="price.html">прайсе</a>.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q8">Можешь хостить проект у себя?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a8">Могу разместить на своей инфраструктуре — от <b>$5/мес</b>. Либо разверну на твоём сервере или VPS — это входит в разработку. Подробнее в блоке хостинга на <a href="price.html">прайсе</a>.</div>
       </details>
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> Используешь ИИ в работе?</span><span class="plus">+</span></summary>
-        <div class="faq-a">Да, чтобы работать быстрее. Если разрешаешь — <b>минус 20%</b> к цене. При этом ИИ идёт на рутину и черновики, а код я проверяю и довожу вручную: страдает только срок, не качество.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q9">Используешь ИИ в работе?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a9">Да, чтобы работать быстрее. Если разрешаешь — <b>минус 20%</b> к цене. При этом ИИ идёт на рутину и черновики, а код я проверяю и довожу вручную: страдает только срок, не качество.</div>
       </details>
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> За что не берёшься?</span><span class="plus">+</span></summary>
-        <div class="faq-a">За спам, накрутки, обход блокировок и любые схемы, нарушающие правила площадки или закон. Только то, за что не прилетит ни тебе, ни мне.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q10">За что не берёшься?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a10">За спам, накрутки, обход блокировок и любые схемы, нарушающие правила площадки или закон. Только то, за что не прилетит ни тебе, ни мне.</div>
       </details>
 
       <details class="faq-item">
-        <summary><span class="qwrap"><span class="qm">Q:</span> Где посмотреть отзывы?</span><span class="plus">+</span></summary>
-        <div class="faq-a">Отзывы собираю в отдельном Telegram-канале — ссылка ниже в блоке контактов.</div>
+        <summary><span class="qwrap"><span class="qm">Q:</span> <span data-i18n="q11">Где посмотреть отзывы?</span></span><span class="plus">+</span></summary>
+        <div class="faq-a" data-i18n="a11">Отзывы собираю в отдельном Telegram-канале — ссылка ниже в блоке контактов.</div>
       </details>
 
     </div>
@@ -227,10 +234,10 @@
   <section id="contact">
     <div class="wrap">
       <div class="cta">
-        <h3>Остался вопрос?</h3>
-        <p>Напиши — отвечу и прикину задачу. А отзывы можно глянуть в канале.</p>
+        <h3 data-i18n="cta_h">Остался вопрос?</h3>
+        <p data-i18n="cta_p">Напиши — отвечу и прикину задачу. А отзывы можно глянуть в канале.</p>
         <div class="links">
-          <a class="lnk reviews" href="https://t.me/+-LIFvifJw8QzYWRi" target="_blank" rel="noopener"><span class="arw">★</span> канал с отзывами</a>
+          <a class="lnk reviews" href="https://t.me/+-LIFvifJw8QzYWRi" target="_blank" rel="noopener"><span class="arw">★</span> <span data-i18n="link_reviews">канал с отзывами</span></a>
           <a class="lnk" href="https://t.me/Im_notundestend" target="_blank" rel="noopener"><span class="arw">↗</span> Telegram · @Im_notundestend</a>
         </div>
       </div>
@@ -240,11 +247,26 @@
 
 <footer>
   <div class="wrap foot">
-    <span>© <span id="yr"></span> oustalker <b>//</b> faq</span>
+    <span>&copy; <span id="yr"></span> Nemo <b>//</b> <span data-i18n="foot_lbl">faq</span></span>
     <span>built &amp; hosted by hand</span>
   </div>
 </footer>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+var I18N = {"nav_price": {"ru": "[ прайс ]", "uk": "[ прайс ]", "en": "[ pricing ]", "kz": "[ баға ]"}, "nav_history": {"ru": "[ история ]", "uk": "[ історія ]", "en": "[ story ]", "kz": "[ тарих ]"}, "nav_home": {"ru": "← главная", "uk": "← головна", "en": "← home", "kz": "← басты"}, "f_boot": {"ru": "faq.load() // частые вопросы", "uk": "faq.load() // часті питання", "en": "faq.load() // common questions", "kz": "faq.load() // жиі қойылатын сұрақтар"}, "f_lede": {"ru": "Короткие ответы на то, что чаще всего спрашивают до старта. Нет твоего вопроса — просто напиши.", "uk": "Короткі відповіді на те, що найчастіше запитують до старту. Немає твого питання — просто напиши.", "en": "Short answers to what people most often ask before starting. Don't see your question — just message me.", "kz": "Бастар алдында жиі қойылатын сұрақтарға қысқа жауаптар. Сұрағың мұнда жоқ па — жай ғана жаз."}, "q1": {"ru": "Сколько стоит бот или проект?", "uk": "Скільки коштує бот або проєкт?", "en": "How much does a bot or project cost?", "kz": "Бот немесе жоба қанша тұрады?"}, "a1": {"ru": "Зависит от задачи. Базовые ориентиры — на странице <a href=\"price.html\">прайса</a>, все цены «от». Точную сумму называю после того, как разберёмся в объёме и логике. Оценка бесплатная.", "uk": "Залежить від задачі. Базові орієнтири — на сторінці <a href=\"price.html\">прайсу</a>, усі ціни «від». Точну суму називаю після того, як розберемося в обсязі та логіці. Оцінка безкоштовна.", "en": "It depends on the task. Basic guidelines are on the <a href=\"price.html\">pricing</a> page, all prices are «from». I give the exact figure once we work out the scope and logic. The estimate is free.", "kz": "Тапсырмаға байланысты. Негізгі бағдарлар <a href=\"price.html\">баға</a> бетінде, барлық бағалар «бастап». Нақты соманы көлем мен логиканы анықтағаннан кейін айтамын. Бағалау тегін."}, "q2": {"ru": "Какие сроки?", "uk": "Які терміни?", "en": "What are the timelines?", "kz": "Мерзімдер қандай?"}, "a2": {"ru": "Простой бот — обычно <b>1–3 дня</b>, проект с базой и логикой — от недели. Точный срок зависит от сложности и загрузки; фиксирую его до старта, чтобы не было сюрпризов.", "uk": "Простий бот — зазвичай <b>1–3 дні</b>, проєкт з базою та логікою — від тижня. Точний термін залежить від складності й завантаженості; фіксую його до старту, щоб не було сюрпризів.", "en": "A simple bot is usually <b>1–3 days</b>, a project with a database and logic starts from a week. The exact timeline depends on complexity and workload; I fix it before we start so there are no surprises.", "kz": "Қарапайым бот — әдетте <b>1–3 күн</b>, дерекқоры мен логикасы бар жоба — бір аптадан бастап. Нақты мерзім күрделілік пен жүктемеге байланысты; тосын жайт болмас үшін оны басталар алдында бекітемін."}, "q3": {"ru": "Под какие площадки делаешь ботов?", "uk": "Під які платформи робиш ботів?", "en": "Which platforms do you build bots for?", "kz": "Қандай платформаларға бот жасайсың?"}, "a3": {"ru": "Telegram, Discord и другие площадки. Если не уверен, реально ли то, что ты задумал, — опиши задачу, скажу сразу.", "uk": "Telegram, Discord та інші платформи. Якщо не впевнений, чи реально те, що ти задумав, — опиши задачу, скажу одразу.", "en": "Telegram, Discord and other platforms. If you're not sure whether what you have in mind is doable — describe the task and I'll tell you right away.", "kz": "Telegram, Discord және басқа платформалар. Ойлағаның мүмкін бе екеніне сенімді болмасаң — тапсырманы сипатта, бірден айтамын."}, "q4": {"ru": "Можно без готового ТЗ?", "uk": "Можна без готового ТЗ?", "en": "Can we work without a ready spec?", "kz": "Дайын ТТ-сыз болады ма?"}, "a4": {"ru": "Да. Помогу сформулировать задачу из «хочу примерно вот такое». Для размытых или исследовательских задач удобнее почасовая работа.", "uk": "Так. Допоможу сформулювати задачу з «хочу приблизно ось таке». Для розмитих або дослідницьких задач зручніша погодинна робота.", "en": "Yes. I'll help turn «I want roughly this» into a proper task. For vague or research tasks, hourly work is more convenient.", "kz": "Иә. «Шамамен осындай керек» дегеннен тапсырма құрастыруға көмектесемін. Анық емес немесе зерттеу тапсырмалары үшін сағаттық жұмыс ыңғайлырақ."}, "q5": {"ru": "Нужна предоплата?", "uk": "Потрібна передоплата?", "en": "Is a prepayment required?", "kz": "Алдын ала төлем керек пе?"}, "a5": {"ru": "Да, <b>30–50%</b> для старта. Остаток — по факту сдачи рабочего результата, после того как ты всё проверил.", "uk": "Так, <b>30–50%</b> для старту. Залишок — за фактом здачі робочого результату, після того як ти все перевірив.", "en": "Yes, <b>30–50%</b> to start. The rest upon delivery of the working result, after you've checked everything.", "kz": "Иә, бастау үшін <b>30–50%</b>. Қалғаны — бәрін тексергеннен кейін, жұмыс нәтижесі тапсырылған кезде."}, "q6": {"ru": "Кому принадлежит код?", "uk": "Кому належить код?", "en": "Who owns the code?", "kz": "Код кімге тиесілі?"}, "a6": {"ru": "Тебе. После оплаты передаю исходники и все доступы полностью — никакой привязки ко мне.", "uk": "Тобі. Після оплати передаю вихідники та всі доступи повністю — жодної прив'язки до мене.", "en": "You. After payment I hand over the source and all access in full — no lock-in to me.", "kz": "Саған. Төлемнен кейін бастапқы кодты және барлық рұқсаттарды толығымен беремін — маған ешқандай тәуелділік жоқ."}, "q7": {"ru": "Делаешь правки после сдачи?", "uk": "Робиш правки після здачі?", "en": "Do you make fixes after delivery?", "kz": "Тапсырғаннан кейін түзету жасайсың ба?"}, "a7": {"ru": "Да. Мелкие правки по согласованному ТЗ — в рамках заказа. Новые фичи и развитие проекта дальше — по договорённости или в формате поддержки.", "uk": "Так. Дрібні правки за узгодженим ТЗ — у межах замовлення. Нові фічі та розвиток проєкту далі — за домовленістю або у форматі підтримки.", "en": "Yes. Minor fixes within the agreed spec are part of the order. New features and further growth are by arrangement or as ongoing support.", "kz": "Иә. Келісілген ТТ бойынша ұсақ түзетулер — тапсырыс аясында. Жаңа мүмкіндіктер мен жобаны әрі қарай дамыту — келісім бойынша немесе қолдау форматында."}, "q8": {"ru": "Можешь хостить проект у себя?", "uk": "Можеш хостити проєкт у себе?", "en": "Can you host the project yourself?", "kz": "Жобаны өзіңде хостинг жасай аласың ба?"}, "a8": {"ru": "Могу разместить на своей инфраструктуре — от <b>$5/мес</b>. Либо разверну на твоём сервере или VPS — это входит в разработку. Подробнее в блоке хостинга на <a href=\"price.html\">прайсе</a>.", "uk": "Можу розмістити на своїй інфраструктурі — від <b>$5/міс</b>. Або розгорну на твоєму сервері чи VPS — це входить у розробку. Докладніше в блоці хостингу на <a href=\"price.html\">прайсі</a>.", "en": "I can host it on my own infrastructure — from <b>$5/mo</b>. Or I'll deploy it on your server or VPS — that's included in development. More in the hosting block on the <a href=\"price.html\">pricing</a> page.", "kz": "Өз инфрақұрылымымда орналастыра аламын — <b>$5/ай</b> бастап. Немесе сенің серверіңде не VPS-те орналастырамын — бұл әзірлеуге кіреді. Толығырақ <a href=\"price.html\">баға</a> бетіндегі хостинг блогында."}, "q9": {"ru": "Используешь ИИ в работе?", "uk": "Використовуєш ШІ в роботі?", "en": "Do you use AI in your work?", "kz": "Жұмыста AI қолданасың ба?"}, "a9": {"ru": "Да, чтобы работать быстрее. Если разрешаешь — <b>минус 20%</b> к цене. При этом ИИ идёт на рутину и черновики, а код я проверяю и довожу вручную: страдает только срок, не качество.", "uk": "Так, щоб працювати швидше. Якщо дозволяєш — <b>мінус 20%</b> до ціни. При цьому ШІ йде на рутину та чернетки, а код я перевіряю і доводжу вручну: страждає лише термін, не якість.", "en": "Yes, to work faster. If you allow it — <b>minus 20%</b> off the price. AI handles routine and drafts, while I check and finish the code by hand: only the timeline shrinks, not the quality.", "kz": "Иә, жылдамырақ жұмыс істеу үшін. Рұқсат берсең — бағаға <b>минус 20%</b>. AI рутина мен нобайларға жұмсалады, ал кодты қолмен тексеріп, пысықтаймын: тек мерзім қысқарады, сапа емес."}, "q10": {"ru": "За что не берёшься?", "uk": "За що не берешся?", "en": "What won't you take on?", "kz": "Нені жұмысқа алмайсың?"}, "a10": {"ru": "За спам, накрутки, обход блокировок и любые схемы, нарушающие правила площадки или закон. Только то, за что не прилетит ни тебе, ни мне.", "uk": "За спам, накрутки, обхід блокувань та будь-які схеми, що порушують правила платформи або закон. Тільки те, за що не прилетить ні тобі, ні мені.", "en": "Spam, fake engagement, ban evasion and any scheme that breaks platform rules or the law. Only what won't come back on you or me.", "kz": "Спам, жалған белсенділік, бұғаттауды айналып өту және платформа ережелерін не заңды бұзатын схемалар. Тек саған да, маған да зиян келмейтін нәрсе ғана."}, "q11": {"ru": "Где посмотреть отзывы?", "uk": "Де подивитися відгуки?", "en": "Where can I see reviews?", "kz": "Пікірлерді қайдан көруге болады?"}, "a11": {"ru": "Отзывы собираю в отдельном Telegram-канале — ссылка ниже в блоке контактов.", "uk": "Відгуки збираю в окремому Telegram-каналі — посилання нижче в блоці контактів.", "en": "I collect reviews in a separate Telegram channel — the link is below in the contacts block.", "kz": "Пікірлерді бөлек Telegram-арнасында жинаймын — сілтеме төменде, байланыс блогында."}, "cta_h": {"ru": "Остался вопрос?", "uk": "Залишилося питання?", "en": "Still have a question?", "kz": "Сұрақ қалды ма?"}, "cta_p": {"ru": "Напиши — отвечу и прикину задачу. А отзывы можно глянуть в канале.", "uk": "Напиши — відповім і прикину задачу. А відгуки можна глянути в каналі.", "en": "Message me — I'll answer and scope the task. And you can check reviews in the channel.", "kz": "Жаз — жауап беріп, тапсырманы бағалаймын. Ал пікірлерді арнадан көруге болады."}, "link_reviews": {"ru": "канал с отзывами", "uk": "канал з відгуками", "en": "reviews channel", "kz": "пікірлер арнасы"}, "foot_lbl": {"ru": "faq", "uk": "faq", "en": "faq", "kz": "faq"}};
+function applyLang(lang){
+  if(!["ru","uk","en","kz"].includes(lang)) lang="ru";
+  document.documentElement.lang=(lang==="kz"?"kk":lang);
+  document.querySelectorAll("[data-i18n]").forEach(function(el){ var k=el.getAttribute("data-i18n"); if(I18N[k]&&I18N[k][lang]!=null) el.innerHTML=I18N[k][lang]; });
+  document.querySelectorAll(".glitch").forEach(function(el){ el.setAttribute("data-text", el.textContent); });
+  document.querySelectorAll("#lang button").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-lang")===lang); });
+  document.querySelectorAll("a.page").forEach(function(a){ var base=a.getAttribute("href").split("?")[0]; a.setAttribute("href", base+"?lang="+lang); });
+  try{ history.replaceState(null,"","?lang="+lang+location.hash); }catch(e){}
+}
+function detectLang(){ var p=new URLSearchParams(location.search).get("lang"); if(p&&["ru","uk","en","kz"].includes(p)) return p; var n=(navigator.language||"ru").toLowerCase(); if(n.indexOf("uk")===0)return "uk"; if(n.indexOf("kk")===0||n.indexOf("kz")===0)return "kz"; if(n.indexOf("en")===0)return "en"; return "ru"; }
+document.getElementById("yr").textContent=new Date().getFullYear();
+document.querySelectorAll("#lang button").forEach(function(b){ b.addEventListener("click",function(){ applyLang(b.getAttribute("data-lang")); }); });
+applyLang(detectLang());
+</script>
 </body>
 </html>

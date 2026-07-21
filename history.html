@@ -156,18 +156,27 @@
     html { scroll-behavior:auto; }
   }
   :focus-visible { outline:2px solid var(--cyan); outline-offset:3px; }
+  .nav-right{display:flex;align-items:center;gap:16px;}
+  @media(max-width:680px){.hnav{display:none;}}
+  .lang{display:flex;gap:4px;flex:none;}
+  .lang button{font-family:"Share Tech Mono",monospace;font-size:11.5px;letter-spacing:0.04em;color:var(--dim);background:none;border:1px solid var(--line);padding:4px 7px;cursor:pointer;transition:color .16s,border-color .16s;}
+  .lang button:hover{color:var(--text);}
+  .lang button.active{color:var(--cyan);border-color:var(--cyan);text-shadow:0 0 8px rgba(38,224,230,0.5);}
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap nav">
-    <a class="brand" href="index.html"><b>//</b> Nemo</a>
-    <nav class="hnav">
-      <a href="price.html">[ прайс ]</a>
-      <a href="faq.html">[ faq ]</a>
-      <a href="index.html">← главная</a>
-    </nav>
+    <a class="brand page" href="index.html"><b>//</b> Nemo</a>
+    <div class="nav-right">
+      <nav class="hnav">
+        <a class="page" href="price.html" data-i18n="nav_price">[ прайс ]</a>
+        <a class="page" href="faq.html" data-i18n="nav_faq">[ faq ]</a>
+        <a class="page" href="index.html" data-i18n="nav_home">← главная</a>
+      </nav>
+      <div class="lang" id="lang"><button data-lang="ru">RU</button><button data-lang="uk">UK</button><button data-lang="en">EN</button><button data-lang="kz">KZ</button></div>
+    </div>
   </div>
 </header>
 
@@ -175,10 +184,8 @@
   <section class="hero" style="border-top:none">
     <div class="wrap">
       <div class="boot"><span class="blip"></span> history.log // read-only</div>
-      <h1 class="glitch" data-text="История">История</h1>
-      <p class="lede">
-        Как самоучка дошёл до <b>ботов</b>, <b>бэкендов</b> и <b>AI-агентов</b> — без курсов и корочек, на реальных задачах.
-      </p>
+      <h1 class="glitch" data-text="История" data-i18n="h_title">История</h1>
+      <p class="lede" data-i18n="h_lede">Как самоучка дошёл до <b>ботов</b>, <b>бэкендов</b> и <b>AI-агентов</b> — без курсов и корочек, на реальных задачах.</p>
     </div>
   </section>
 
@@ -187,36 +194,36 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="idx mono">01</span>
-        <h2>Путь<span class="slash"> // </span>лог</h2>
+        <h2><span data-i18n="sec_log_a">Путь</span><span class="slash"> // </span><span data-i18n="sec_log_b">лог</span></h2>
       </div>
       <div class="log">
 
         <div class="entry">
           <span class="dot"></span>
           <span class="tag mono">[00] init</span>
-          <h3>Старт без корочки</h3>
-          <p>В разработку пришёл сам. Не было профильного диплома и марафона за спиной — была задача, которую хотелось решить кодом. Так всё и началось: не с теории, а с конкретной проблемы.</p>
+          <h3 data-i18n="e0_h">Старт без корочки</h3>
+          <p data-i18n="e0_p">В разработку пришёл сам. Не было профильного диплома и марафона за спиной — была задача, которую хотелось решить кодом. Так всё и началось: не с теории, а с конкретной проблемы.</p>
         </div>
 
         <div class="entry">
           <span class="dot"></span>
           <span class="tag mono">[01] build</span>
-          <h3>Первое, что заработало</h3>
-          <p>Ранние проекты — Telegram-боты и небольшие автоматизации. Быстро понял, что больше всего затягивают штуки, которые после запуска работают сами и снимают рутину. Это и задало направление.</p>
+          <h3 data-i18n="e1_h">Первое, что заработало</h3>
+          <p data-i18n="e1_p">Ранние проекты — Telegram-боты и небольшие автоматизации. Быстро понял, что больше всего затягивают штуки, которые после запуска работают сами и снимают рутину. Это и задало направление.</p>
         </div>
 
         <div class="entry">
           <span class="dot"></span>
           <span class="tag mono">[02] scale</span>
-          <h3>Глубже в систему</h3>
-          <p>Дальше задачи усложнялись: асинхронность, базы данных, FastAPI-бэкенды, интеграции с AI, своя self-hosted инфраструктура. Правило простое — учу ровно то, что нужно под текущий проект, и сразу применяю в бою.</p>
+          <h3 data-i18n="e2_h">Глубже в систему</h3>
+          <p data-i18n="e2_p">Дальше задачи усложнялись: асинхронность, базы данных, FastAPI-бэкенды, интеграции с AI, своя self-hosted инфраструктура. Правило простое — учу ровно то, что нужно под текущий проект, и сразу применяю в бою.</p>
         </div>
 
         <div class="entry">
           <span class="dot"></span>
           <span class="tag mono">[03] now</span>
-          <h3>Сейчас</h3>
-          <p>Собираю проекты под заказ и выстраиваю репутацию разработчика. Цель — удалённая работа и вещи, за которые не стыдно показать код.</p>
+          <h3 data-i18n="e3_h">Сейчас</h3>
+          <p data-i18n="e3_p">Собираю проекты под заказ и выстраиваю репутацию разработчика. Цель — удалённая работа и вещи, за которые не стыдно показать код.</p>
         </div>
 
       </div>
@@ -228,20 +235,20 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="idx mono">02</span>
-        <h2>Принципы<span class="slash"> // </span>во что верю</h2>
+        <h2><span data-i18n="sec_dr_a">Принципы</span><span class="slash"> // </span><span data-i18n="sec_dr_b">во что верю</span></h2>
       </div>
       <div class="drive">
         <div class="dcard">
-          <div class="q"><span class="m">«</span>Практика бьёт теорию<span class="m">»</span></div>
-          <p>Учусь, делая, а не коллекционируя сертификаты. Навык проверяется работающим проектом, а не строчкой в резюме.</p>
+          <div class="q"><span class="m">«</span><span data-i18n="d1_q">Практика бьёт теорию</span><span class="m">»</span></div>
+          <p data-i18n="d1_p">Учусь, делая, а не коллекционируя сертификаты. Навык проверяется работающим проектом, а не строчкой в резюме.</p>
         </div>
         <div class="dcard">
-          <div class="q"><span class="m">«</span>Код работает без няньки<span class="m">»</span></div>
-          <p>Ценю автоматизацию и надёжность выше красивых демок. Хорошая система крутится сама, пока ты спишь.</p>
+          <div class="q"><span class="m">«</span><span data-i18n="d2_q">Код работает без няньки</span><span class="m">»</span></div>
+          <p data-i18n="d2_p">Ценю автоматизацию и надёжность выше красивых демок. Хорошая система крутится сама, пока ты спишь.</p>
         </div>
         <div class="dcard">
-          <div class="q"><span class="m">«</span>Владею всей вертикалью<span class="m">»</span></div>
-          <p>От строчки кода до железа, на котором она запущена. Понимаю путь целиком, а не только уровень библиотек.</p>
+          <div class="q"><span class="m">«</span><span data-i18n="d3_q">Владею всей вертикалью</span><span class="m">»</span></div>
+          <p data-i18n="d3_p">От строчки кода до железа, на котором она запущена. Понимаю путь целиком, а не только уровень библиотек.</p>
         </div>
       </div>
     </div>
@@ -251,11 +258,11 @@
   <section id="contact">
     <div class="wrap">
       <div class="cta">
-        <h3>Дальше — твоя задача</h3>
-        <p>Есть, что автоматизировать или собрать? Опиши — прикину, как сделать, и в какие сроки.</p>
+        <h3 data-i18n="cta_h">Дальше — твоя задача</h3>
+        <p data-i18n="cta_p">Есть, что автоматизировать или собрать? Опиши — прикину, как сделать, и в какие сроки.</p>
         <div class="links">
-          <a class="lnk reviews" href="https://t.me/+-LIFvifJw8QzYWRi" target="_blank" rel="noopener"><span class="arw">★</span> канал с отзывами</a>
-          <a class="lnk" href="price.html"><span class="arw">↗</span> посмотреть прайс</a>
+          <a class="lnk reviews" href="https://t.me/+-LIFvifJw8QzYWRi" target="_blank" rel="noopener"><span class="arw">★</span> <span data-i18n="link_reviews">канал с отзывами</span></a>
+          <a class="lnk" href="price.html"><span class="arw">↗</span> <span data-i18n="link_price">посмотреть прайс</span></a>
         </div>
       </div>
     </div>
@@ -264,11 +271,26 @@
 
 <footer>
   <div class="wrap foot">
-    <span>© <span id="yr"></span> oustalker <b>//</b> история</span>
+    <span>&copy; <span id="yr"></span> Nemo <b>//</b> <span data-i18n="foot_lbl">история</span></span>
     <span>built &amp; hosted by hand</span>
   </div>
 </footer>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+var I18N = {"nav_price": {"ru": "[ прайс ]", "uk": "[ прайс ]", "en": "[ pricing ]", "kz": "[ баға ]"}, "nav_faq": {"ru": "[ faq ]", "uk": "[ faq ]", "en": "[ faq ]", "kz": "[ faq ]"}, "nav_home": {"ru": "← главная", "uk": "← головна", "en": "← home", "kz": "← басты"}, "h_title": {"ru": "История", "uk": "Історія", "en": "Story", "kz": "Тарих"}, "h_lede": {"ru": "Как самоучка дошёл до <b>ботов</b>, <b>бэкендов</b> и <b>AI-агентов</b> — без курсов и корочек, на реальных задачах.", "uk": "Як самоучка дійшов до <b>ботів</b>, <b>бекендів</b> та <b>AI-агентів</b> — без курсів і дипломів, на реальних задачах.", "en": "How a self-taught developer got to <b>bots</b>, <b>backends</b> and <b>AI agents</b> — no courses or diplomas, just real tasks.", "kz": "Өзін-өзі оқытқан адам <b>боттарға</b>, <b>бэкендтерге</b> және <b>AI-агенттерге</b> қалай жеткені — курстарсыз және дипломсыз, нақты тапсырмаларда."}, "sec_log_a": {"ru": "Путь", "uk": "Шлях", "en": "Path", "kz": "Жол"}, "sec_log_b": {"ru": "лог", "uk": "лог", "en": "log", "kz": "лог"}, "e0_h": {"ru": "Старт без корочки", "uk": "Старт без диплома", "en": "Starting without a diploma", "kz": "Дипломсыз бастау"}, "e0_p": {"ru": "В разработку пришёл сам. Не было профильного диплома и марафона за спиной — была задача, которую хотелось решить кодом. Так всё и началось: не с теории, а с конкретной проблемы.", "uk": "У розробку прийшов сам. Не було профільного диплома чи марафону за спиною — була задача, яку хотілося вирішити кодом. Так усе й почалося: не з теорії, а з конкретної проблеми.", "en": "I came into development on my own. No relevant diploma or bootcamp behind me — just a task I wanted to solve with code. That's how it started: not with theory, but with a concrete problem.", "kz": "Әзірлеуге өзім келдім. Артымда бейінді диплом да, марафон да болған жоқ — кодпен шешкім келген тапсырма болды. Осылай басталды: теориядан емес, нақты мәселеден."}, "e1_h": {"ru": "Первое, что заработало", "uk": "Перше, що запрацювало", "en": "The first thing that worked", "kz": "Алғаш жұмыс істеген нәрсе"}, "e1_p": {"ru": "Ранние проекты — Telegram-боты и небольшие автоматизации. Быстро понял, что больше всего затягивают штуки, которые после запуска работают сами и снимают рутину. Это и задало направление.", "uk": "Ранні проєкти — Telegram-боти та невеликі автоматизації. Швидко зрозумів, що найбільше затягують речі, які після запуску працюють самі й знімають рутину. Це й задало напрямок.", "en": "Early projects were Telegram bots and small automations. I quickly realized what pulls me in most: things that run themselves after launch and take the routine off your hands. That set the direction.", "kz": "Алғашқы жобалар — Telegram боттары мен шағын автоматтандырулар. Іске қосылғаннан кейін өздігінен жұмыс істеп, рутинаны алып тастайтын нәрселер қатты қызықтыратынын тез түсіндім. Осы бағытты айқындады."}, "e2_h": {"ru": "Глубже в систему", "uk": "Глибше в систему", "en": "Deeper into systems", "kz": "Жүйеге тереңірек"}, "e2_p": {"ru": "Дальше задачи усложнялись: асинхронность, базы данных, FastAPI-бэкенды, интеграции с AI, своя self-hosted инфраструктура. Правило простое — учу ровно то, что нужно под текущий проект, и сразу применяю в бою.", "uk": "Далі задачі ускладнювалися: асинхронність, бази даних, FastAPI-бекенди, інтеграції з AI, власна self-hosted інфраструктура. Правило просте — вчу рівно те, що потрібно під поточний проєкт, і одразу застосовую в бою.", "en": "The tasks kept getting harder: async, databases, FastAPI backends, AI integrations, my own self-hosted infrastructure. The rule is simple — I learn exactly what the current project needs and apply it right away.", "kz": "Әрі қарай тапсырмалар күрделене түсті: асинхрондылық, дерекқорлар, FastAPI-бэкендтер, AI-мен интеграциялар, өзімнің self-hosted инфрақұрылымым. Ереже қарапайым — ағымдағы жобаға не керек болса, соны үйреніп, бірден іске қосамын."}, "e3_h": {"ru": "Сейчас", "uk": "Зараз", "en": "Now", "kz": "Қазір"}, "e3_p": {"ru": "Собираю проекты под заказ и выстраиваю репутацию разработчика. Цель — удалённая работа и вещи, за которые не стыдно показать код.", "uk": "Збираю проєкти на замовлення і вибудовую репутацію розробника. Мета — віддалена робота і речі, за які не соромно показати код.", "en": "I build projects to order and grow my reputation as a developer. The goal is remote work and things whose code I'm not ashamed to show.", "kz": "Тапсырыс бойынша жобалар жасап, әзірлеуші ретінде беделімді қалыптастырамын. Мақсат — қашықтан жұмыс және кодын көрсетуге ұялмайтын дүниелер."}, "sec_dr_a": {"ru": "Принципы", "uk": "Принципи", "en": "Principles", "kz": "Ұстанымдар"}, "sec_dr_b": {"ru": "во что верю", "uk": "у що вірю", "en": "what I believe", "kz": "неге сенемін"}, "d1_q": {"ru": "Практика бьёт теорию", "uk": "Практика б'є теорію", "en": "Practice beats theory", "kz": "Тәжірибе теориядан күшті"}, "d1_p": {"ru": "Учусь, делая, а не коллекционируя сертификаты. Навык проверяется работающим проектом, а не строчкой в резюме.", "uk": "Вчуся, роблячи, а не колекціонуючи сертифікати. Навичка перевіряється робочим проєктом, а не рядком у резюме.", "en": "I learn by doing, not by collecting certificates. A skill is proven by a working project, not a line on a résumé.", "kz": "Сертификат жинап емес, істеп үйренемін. Дағды резюмедегі жолмен емес, жұмыс істейтін жобамен тексеріледі."}, "d2_q": {"ru": "Код работает без няньки", "uk": "Код працює без няньки", "en": "Code that runs unattended", "kz": "Код бақылаусыз жұмыс істейді"}, "d2_p": {"ru": "Ценю автоматизацию и надёжность выше красивых демок. Хорошая система крутится сама, пока ты спишь.", "uk": "Ціную автоматизацію та надійність вище за красиві демки. Гарна система крутиться сама, поки ти спиш.", "en": "I value automation and reliability over pretty demos. A good system runs itself while you sleep.", "kz": "Автоматтандыру мен сенімділікті әдемі демолардан жоғары бағалаймын. Жақсы жүйе сен ұйықтап жатқанда өздігінен жұмыс істейді."}, "d3_q": {"ru": "Владею всей вертикалью", "uk": "Володію всією вертикаллю", "en": "I own the whole stack", "kz": "Бүкіл тік құрылымды меңгергенмін"}, "d3_p": {"ru": "От строчки кода до железа, на котором она запущена. Понимаю путь целиком, а не только уровень библиотек.", "uk": "Від рядка коду до заліза, на якому він запущений. Розумію шлях цілком, а не лише рівень бібліотек.", "en": "From a line of code to the hardware it runs on. I understand the whole path, not just the library level.", "kz": "Кодтың жолынан ол жұмыс істейтін темірге дейін. Тек кітапхана деңгейін ғана емес, бүкіл жолды түсінемін."}, "cta_h": {"ru": "Дальше — твоя задача", "uk": "Далі — твоя задача", "en": "Your task is next", "kz": "Келесі — сенің тапсырмаң"}, "cta_p": {"ru": "Есть, что автоматизировать или собрать? Опиши — прикину, как сделать, и в какие сроки.", "uk": "Є що автоматизувати чи зібрати? Опиши — прикину, як зробити і в які терміни.", "en": "Got something to automate or build? Describe it — I'll estimate how and how fast.", "kz": "Автоматтандыратын немесе жинайтын нәрсе бар ма? Сипатта — қалай және қанша уақытта істейтінімді бағалаймын."}, "link_reviews": {"ru": "канал с отзывами", "uk": "канал з відгуками", "en": "reviews channel", "kz": "пікірлер арнасы"}, "link_price": {"ru": "посмотреть прайс", "uk": "переглянути прайс", "en": "see pricing", "kz": "бағаны қарау"}, "foot_lbl": {"ru": "история", "uk": "історія", "en": "story", "kz": "тарих"}};
+function applyLang(lang){
+  if(!["ru","uk","en","kz"].includes(lang)) lang="ru";
+  document.documentElement.lang=(lang==="kz"?"kk":lang);
+  document.querySelectorAll("[data-i18n]").forEach(function(el){ var k=el.getAttribute("data-i18n"); if(I18N[k]&&I18N[k][lang]!=null) el.innerHTML=I18N[k][lang]; });
+  document.querySelectorAll(".glitch").forEach(function(el){ el.setAttribute("data-text", el.textContent); });
+  document.querySelectorAll("#lang button").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-lang")===lang); });
+  document.querySelectorAll("a.page").forEach(function(a){ var base=a.getAttribute("href").split("?")[0]; a.setAttribute("href", base+"?lang="+lang); });
+  try{ history.replaceState(null,"","?lang="+lang+location.hash); }catch(e){}
+}
+function detectLang(){ var p=new URLSearchParams(location.search).get("lang"); if(p&&["ru","uk","en","kz"].includes(p)) return p; var n=(navigator.language||"ru").toLowerCase(); if(n.indexOf("uk")===0)return "uk"; if(n.indexOf("kk")===0||n.indexOf("kz")===0)return "kz"; if(n.indexOf("en")===0)return "en"; return "ru"; }
+document.getElementById("yr").textContent=new Date().getFullYear();
+document.querySelectorAll("#lang button").forEach(function(b){ b.addEventListener("click",function(){ applyLang(b.getAttribute("data-lang")); }); });
+applyLang(detectLang());
+</script>
 </body>
 </html>

@@ -217,29 +217,37 @@
     html { scroll-behavior:auto; }
   }
   :focus-visible { outline:2px solid var(--cyan); outline-offset:3px; }
+  .nav-right{display:flex;align-items:center;gap:16px;}
+  .pnav{display:flex;gap:20px;align-items:center;}
+  @media(max-width:680px){.pnav{display:none;}}
+  .lang{display:flex;gap:4px;flex:none;}
+  .lang button{font-family:"Share Tech Mono",monospace;font-size:11.5px;letter-spacing:0.04em;color:var(--dim);background:none;border:1px solid var(--line);padding:4px 7px;cursor:pointer;transition:color .16s,border-color .16s;}
+  .lang button:hover{color:var(--text);}
+  .lang button.active{color:var(--cyan);border-color:var(--cyan);text-shadow:0 0 8px rgba(38,224,230,0.5);}
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap nav">
-    <a class="brand" href="index.html"><b>//</b> Nemo</a>
-    <nav style="display:flex; gap:22px; align-items:center;">
-      <a class="back mono" href="history.html">[ история ]</a>
-      <a class="back mono" href="faq.html">[ faq ]</a>
-      <a class="back mono" href="index.html">← главная</a>
-    </nav>
+    <a class="brand page" href="index.html"><b>//</b> Nemo</a>
+    <div class="nav-right">
+      <nav class="pnav">
+        <a class="back mono page" href="history.html" data-i18n="nav_history">[ история ]</a>
+        <a class="back mono page" href="faq.html" data-i18n="nav_faq">[ faq ]</a>
+        <a class="back mono page" href="index.html" data-i18n="nav_home">← главная</a>
+      </nav>
+      <div class="lang" id="lang"><button data-lang="ru">RU</button><button data-lang="uk">UK</button><button data-lang="en">EN</button><button data-lang="kz">KZ</button></div>
+    </div>
   </div>
 </header>
 
 <main>
   <section class="hero" style="border-top:none">
     <div class="wrap">
-      <div class="boot"><span class="blip"></span> pricing.load() // цены примерные</div>
-      <h1 class="glitch" data-text="Прайс">Прайс</h1>
-      <p class="lede">
-        Ориентировочные ставки на <b>ботов</b> (Telegram, Discord и др.), <b>автоматизацию</b> и <b>бэкенды</b>. Точная цена — после обсуждения задачи: зависит от объёма, сроков и логики.
-      </p>
+      <div class="boot"><span class="blip"></span> <span data-i18n="p_boot">pricing.load() // цены примерные</span></div>
+      <h1 class="glitch" data-text="Прайс" data-i18n="p_title">Прайс</h1>
+      <p class="lede" data-i18n="p_lede">Ориентировочные ставки на <b>ботов</b> (Telegram, Discord и др.), <b>автоматизацию</b> и <b>бэкенды</b>. Точная цена — после обсуждения задачи: зависит от объёма, сроков и логики.</p>
     </div>
   </section>
 
@@ -250,45 +258,45 @@
 
         <div class="tier">
           <span class="badge" style="background:var(--cyan); color:#04121a">start</span>
-          <div class="kind mono">./базовый бот</div>
-          <h3>Простой бот</h3>
+          <div class="kind mono" data-i18n="t1_kind">./базовый бот</div>
+          <h3 data-i18n="t1_h">Простой бот</h3>
           <div class="price"><span class="cur">$</span>50<small> +</small></div>
-          <div class="term">срок ~1–3 дня</div>
+          <div class="term" data-i18n="t1_term">срок ~1–3 дня</div>
           <ul class="feats">
-            <li>бот для Telegram, Discord и др.</li>
-            <li>до ~5 команд / сценариев</li>
-            <li>простое хранение данных</li>
-            <li>деплой на твой/мой сервер</li>
+            <li data-i18n="t1_f1">бот для Telegram, Discord и др.</li>
+            <li data-i18n="t1_f2">до ~5 команд / сценариев</li>
+            <li data-i18n="t1_f3">простое хранение данных</li>
+            <li data-i18n="t1_f4">деплой на твой/мой сервер</li>
           </ul>
         </div>
 
         <div class="tier feat">
           <span class="badge">pro</span>
-          <div class="kind mono">./бот под ключ</div>
-          <h3>Бот PRO</h3>
+          <div class="kind mono" data-i18n="t2_kind">./бот под ключ</div>
+          <h3 data-i18n="t2_h">Бот PRO</h3>
           <div class="price"><span class="cur">$</span>180<small> +</small></div>
-          <div class="term">срок ~4–10 дней</div>
+          <div class="term" data-i18n="t2_term">срок ~4–10 дней</div>
           <ul class="feats">
-            <li>база данных (SQLAlchemy async)</li>
-            <li>приём оплаты / подписки</li>
-            <li>админ-панель и роли</li>
-            <li>планировщик задач (APScheduler)</li>
-            <li>рассылки, логи, обработка ошибок</li>
+            <li data-i18n="t2_f1">база данных (SQLAlchemy async)</li>
+            <li data-i18n="t2_f2">приём оплаты / подписки</li>
+            <li data-i18n="t2_f3">админ-панель и роли</li>
+            <li data-i18n="t2_f4">планировщик задач (APScheduler)</li>
+            <li data-i18n="t2_f5">рассылки, логи, обработка ошибок</li>
           </ul>
         </div>
 
         <div class="tier">
           <span class="badge" style="background:var(--yellow); color:#141000">max</span>
-          <div class="kind mono">./система</div>
-          <h3>Бот + бэкенд</h3>
+          <div class="kind mono" data-i18n="t3_kind">./система</div>
+          <h3 data-i18n="t3_h">Бот + бэкенд</h3>
           <div class="price"><span class="cur">$</span>350<small> +</small></div>
-          <div class="term">срок — по ТЗ</div>
+          <div class="term" data-i18n="t3_term">срок — по ТЗ</div>
           <ul class="feats">
-            <li>FastAPI-бэкенд / REST API</li>
-            <li>бот + веб + база в связке</li>
-            <li>интеграции с внешними API</li>
-            <li>автоматизация процессов</li>
-            <li>настройка инфры и деплой</li>
+            <li data-i18n="t3_f1">FastAPI-бэкенд / REST API</li>
+            <li data-i18n="t3_f2">бот + веб + база в связке</li>
+            <li data-i18n="t3_f3">интеграции с внешними API</li>
+            <li data-i18n="t3_f4">автоматизация процессов</li>
+            <li data-i18n="t3_f5">настройка инфры и деплой</li>
           </ul>
         </div>
 
@@ -302,12 +310,12 @@
       <div class="promo">
         <div class="ic mono">&gt;&gt;</div>
         <div>
-          <h4>С AI-ускорением тебе выгоднее</h4>
-          <p>Разрешаешь использовать ИИ в работе — выигрываешь дважды: срок короче, а цена ниже на 20%. ИИ беру на рутину и черновики, но каждую строчку проверяю и довожу вручную — падает только время, не качество.</p>
+          <h4 data-i18n="promo_h">С AI-ускорением тебе выгоднее</h4>
+          <p data-i18n="promo_p">Разрешаешь использовать ИИ в работе — выигрываешь дважды: срок короче, а цена ниже на 20%. ИИ беру на рутину и черновики, но каждую строчку проверяю и довожу вручную — падает только время, не качество.</p>
           <div class="benes">
-            <span class="be"><b>↓</b> цена −20%</span>
-            <span class="be"><b>↑</b> скорость</span>
-            <span class="be"><b>=</b> то же качество</span>
+            <span class="be"><b>↓</b> <span data-i18n="be1">цена −20%</span></span>
+            <span class="be"><b>↑</b> <span data-i18n="be2">скорость</span></span>
+            <span class="be"><b>=</b> <span data-i18n="be3">то же качество</span></span>
           </div>
         </div>
         <div class="cut">−20%</div>
@@ -320,28 +328,28 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="idx mono">01</span>
-        <h2>Отдельно<span class="slash"> // </span>услуги</h2>
+        <h2><span data-i18n="sec01_a">Отдельно</span><span class="slash"> // </span><span data-i18n="sec01_b">услуги</span></h2>
       </div>
       <div class="ratelist">
         <div class="row">
-          <div class="svc"><h4>Автоматизация · парсинг</h4><p>сбор данных, парсинг сайтов, скрипты по расписанию</p></div>
-          <div class="amt"><span class="cur">$</span>40 <small>/ от</small></div>
+          <div class="svc"><h4 data-i18n="s1_h">Автоматизация · парсинг</h4><p data-i18n="s1_p">сбор данных, парсинг сайтов, скрипты по расписанию</p></div>
+          <div class="amt"><span class="cur">$</span>40 <small data-i18n="u_from">/ от</small></div>
         </div>
         <div class="row">
-          <div class="svc"><h4>FastAPI-бэкенд · REST API</h4><p>асинхронный API под бота или веб, работа с базой</p></div>
-          <div class="amt"><span class="cur">$</span>200 <small>/ от</small></div>
+          <div class="svc"><h4 data-i18n="s2_h">FastAPI-бэкенд · REST API</h4><p data-i18n="s2_p">асинхронный API под бота или веб, работа с базой</p></div>
+          <div class="amt"><span class="cur">$</span>200 <small data-i18n="u_from">/ от</small></div>
         </div>
         <div class="row">
-          <div class="svc"><h4>AI-интеграция</h4><p>Claude API, транскрипция (whisper), синтез речи, обработка видео</p></div>
-          <div class="amt"><span class="cur">$</span>120 <small>/ от</small></div>
+          <div class="svc"><h4 data-i18n="s3_h">AI-интеграция</h4><p data-i18n="s3_p">Claude API, транскрипция (whisper), синтез речи, обработка видео</p></div>
+          <div class="amt"><span class="cur">$</span>120 <small data-i18n="u_from">/ от</small></div>
         </div>
         <div class="row">
-          <div class="svc"><h4>Правки · поддержка</h4><p>доработки, фиксы, сопровождение готового проекта</p></div>
-          <div class="amt"><span class="cur">$</span>15 <small>/ час</small></div>
+          <div class="svc"><h4 data-i18n="s4_h">Правки · поддержка</h4><p data-i18n="s4_p">доработки, фиксы, сопровождение готового проекта</p></div>
+          <div class="amt"><span class="cur">$</span>15 <small data-i18n="u_hour">/ час</small></div>
         </div>
         <div class="row">
-          <div class="svc"><h4>Почасовая ставка</h4><p>для задач без чёткого ТЗ или исследовательских</p></div>
-          <div class="amt"><span class="cur">$</span>20 <small>/ час</small></div>
+          <div class="svc"><h4 data-i18n="s5_h">Почасовая ставка</h4><p data-i18n="s5_p">для задач без чёткого ТЗ или исследовательских</p></div>
+          <div class="amt"><span class="cur">$</span>20 <small data-i18n="u_hour">/ час</small></div>
         </div>
       </div>
     </div>
@@ -352,20 +360,20 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="idx mono">02</span>
-        <h2>Хостинг<span class="slash"> // </span>размещение</h2>
+        <h2><span data-i18n="sec02_a">Хостинг</span><span class="slash"> // </span><span data-i18n="sec02_b">размещение</span></h2>
       </div>
       <div class="ratelist">
         <div class="row">
-          <div class="svc"><h4>Размещение на моём сервере</h4><p>бот или скрипт живёт на моей self-hosted инфре — без возни с чужим VPS</p></div>
-          <div class="amt"><span class="cur">$</span>5 <small>/ мес · от</small></div>
+          <div class="svc"><h4 data-i18n="hh1_h">Размещение на моём сервере</h4><p data-i18n="hh1_p">бот или скрипт живёт на моей self-hosted инфре — без возни с чужим VPS</p></div>
+          <div class="amt"><span class="cur">$</span>5 <small data-i18n="u_month">/ мес · от</small></div>
         </div>
         <div class="row">
-          <div class="svc"><h4>Хостинг + присмотр</h4><p>мониторинг, автоперезапуск при сбое, регулярные бэкапы базы</p></div>
-          <div class="amt"><span class="cur">$</span>12 <small>/ мес · от</small></div>
+          <div class="svc"><h4 data-i18n="hh2_h">Хостинг + присмотр</h4><p data-i18n="hh2_p">мониторинг, автоперезапуск при сбое, регулярные бэкапы базы</p></div>
+          <div class="amt"><span class="cur">$</span>12 <small data-i18n="u_month">/ мес · от</small></div>
         </div>
         <div class="row">
-          <div class="svc"><h4>Деплой на твой сервер / VPS</h4><p>настрою и запущу проект на твоей стороне — входит в разработку</p></div>
-          <div class="amt"><span class="cur">$</span>0 <small>/ входит</small></div>
+          <div class="svc"><h4 data-i18n="hh3_h">Деплой на твой сервер / VPS</h4><p data-i18n="hh3_p">настрою и запущу проект на твоей стороне — входит в разработку</p></div>
+          <div class="amt"><span class="cur">$</span>0 <small data-i18n="u_incl">/ входит</small></div>
         </div>
       </div>
     </div>
@@ -376,13 +384,13 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="idx mono">03</span>
-        <h2>Условия<span class="slash"> // </span>как считается</h2>
+        <h2><span data-i18n="sec03_a">Условия</span><span class="slash"> // </span><span data-i18n="sec03_b">как считается</span></h2>
       </div>
       <div class="notes">
-        <div class="note"><span class="mk mono">&gt;</span><p><b>Цены — «от».</b> Финальная сумма фиксируется после обсуждения задачи и объёма работ.</p></div>
-        <div class="note"><span class="mk mono">&gt;</span><p><b>Предоплата 30–50%.</b> Остаток — по факту сдачи рабочего результата.</p></div>
-        <div class="note"><span class="mk mono">&gt;</span><p><b>Сроки — ориентир.</b> Зависят от загрузки и сложности; уточняются до старта.</p></div>
-        <div class="note"><span class="mk mono">&gt;</span><p><b>Исходники твои.</b> После оплаты код и доступы полностью передаются тебе.</p></div>
+        <div class="note"><span class="mk mono">&gt;</span><p data-i18n="n1"><b>Цены — «от».</b> Финальная сумма фиксируется после обсуждения задачи и объёма работ.</p></div>
+        <div class="note"><span class="mk mono">&gt;</span><p data-i18n="n2"><b>Предоплата 30–50%.</b> Остаток — по факту сдачи рабочего результата.</p></div>
+        <div class="note"><span class="mk mono">&gt;</span><p data-i18n="n3"><b>Сроки — ориентир.</b> Зависят от загрузки и сложности; уточняются до старта.</p></div>
+        <div class="note"><span class="mk mono">&gt;</span><p data-i18n="n4"><b>Исходники твои.</b> После оплаты код и доступы полностью передаются тебе.</p></div>
       </div>
     </div>
   </section>
@@ -392,16 +400,16 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="idx mono">04</span>
-        <h2>Процесс<span class="slash"> // </span>как всё происходит</h2>
+        <h2><span data-i18n="sec04_a">Процесс</span><span class="slash"> // </span><span data-i18n="sec04_b">как всё происходит</span></h2>
       </div>
       <div class="flow">
-        <div class="step"><div class="no">01</div><h4>Заявка</h4><p>Скидываешь задачу — что нужно, зачем, есть ли примеры. Задаю уточняющие вопросы. Оценка бесплатна.</p></div>
-        <div class="step"><div class="no">02</div><h4>ТЗ и оценка</h4><p>Фиксируем объём, платформу, стек, срок и цену. Договорённость письменно — чтобы у обоих было одно понимание.</p></div>
-        <div class="step"><div class="no">03</div><h4>Предоплата</h4><p>30–50% для старта. Остаток — по факту рабочего результата.</p></div>
-        <div class="step"><div class="no">04</div><h4>Разработка</h4><p>Пишу и показываю промежуточные версии. Смотришь, даёшь фидбек — правим по ходу, а не в самом конце.</p></div>
-        <div class="step"><div class="no">05</div><h4>Тесты и сдача</h4><p>Проверяем на реальных сценариях, вычищаю баги, закрываю замечания.</p></div>
-        <div class="step"><div class="no">06</div><h4>Деплой и хостинг</h4><p>Запускаю на твоём сервере или размещаю на своей инфре. Передаю код и все доступы.</p></div>
-        <div class="step"><div class="no">07</div><h4>Поддержка и доработки</h4><p>Дальше — по желанию: фиксы, обновления, новые фичи. Проект живёт и растёт, а не бросается после сдачи.</p></div>
+        <div class="step"><div class="no">01</div><h4 data-i18n="st1_h">Заявка</h4><p data-i18n="st1_p">Скидываешь задачу — что нужно, зачем, есть ли примеры. Задаю уточняющие вопросы. Оценка бесплатна.</p></div>
+        <div class="step"><div class="no">02</div><h4 data-i18n="st2_h">ТЗ и оценка</h4><p data-i18n="st2_p">Фиксируем объём, платформу, стек, срок и цену. Договорённость письменно — чтобы у обоих было одно понимание.</p></div>
+        <div class="step"><div class="no">03</div><h4 data-i18n="st3_h">Предоплата</h4><p data-i18n="st3_p">30–50% для старта. Остаток — по факту рабочего результата.</p></div>
+        <div class="step"><div class="no">04</div><h4 data-i18n="st4_h">Разработка</h4><p data-i18n="st4_p">Пишу и показываю промежуточные версии. Смотришь, даёшь фидбек — правим по ходу, а не в самом конце.</p></div>
+        <div class="step"><div class="no">05</div><h4 data-i18n="st5_h">Тесты и сдача</h4><p data-i18n="st5_p">Проверяем на реальных сценариях, вычищаю баги, закрываю замечания.</p></div>
+        <div class="step"><div class="no">06</div><h4 data-i18n="st6_h">Деплой и хостинг</h4><p data-i18n="st6_p">Запускаю на твоём сервере или размещаю на своей инфре. Передаю код и все доступы.</p></div>
+        <div class="step"><div class="no">07</div><h4 data-i18n="st7_h">Поддержка и доработки</h4><p data-i18n="st7_p">Дальше — по желанию: фиксы, обновления, новые фичи. Проект живёт и растёт, а не бросается после сдачи.</p></div>
       </div>
     </div>
   </section>
@@ -412,8 +420,8 @@
       <div class="policy">
         <div class="ic mono">[ ! ]</div>
         <div>
-          <h4>Что не беру в работу</h4>
-          <p>Не пишу ботов для спама, накруток, обхода блокировок и любых схем, нарушающих правила площадки или закон. Берусь только за то, за что не прилетит ни тебе, ни мне.</p>
+          <h4 data-i18n="pol_h">Что не беру в работу</h4>
+          <p data-i18n="pol_p">Не пишу ботов для спама, накруток, обхода блокировок и любых схем, нарушающих правила площадки или закон. Берусь только за то, за что не прилетит ни тебе, ни мне.</p>
         </div>
       </div>
     </div>
@@ -423,10 +431,10 @@
   <section id="contact">
     <div class="wrap">
       <div class="cta">
-        <h3>Обсудим задачу?</h3>
-        <p>Опиши, что нужно — прикину цену и срок под конкретику. Оценка бесплатная.</p>
+        <h3 data-i18n="cta_h">Обсудим задачу?</h3>
+        <p data-i18n="cta_p">Опиши, что нужно — прикину цену и срок под конкретику. Оценка бесплатная.</p>
         <div class="links">
-          <a class="lnk reviews" href="https://t.me/+-LIFvifJw8QzYWRi" target="_blank" rel="noopener"><span class="arw">★</span> канал с отзывами</a>
+          <a class="lnk reviews" href="https://t.me/+-LIFvifJw8QzYWRi" target="_blank" rel="noopener"><span class="arw">★</span> <span data-i18n="link_reviews">канал с отзывами</span></a>
           <a class="lnk" href="https://t.me/Im_notundestend" target="_blank" rel="noopener"><span class="arw">↗</span> Telegram · @Im_notundestend</a>
         </div>
       </div>
@@ -436,11 +444,28 @@
 
 <footer>
   <div class="wrap foot">
-    <span>© <span id="yr"></span> oustalker <b>//</b> прайс</span>
-    <span>цены ориентировочные</span>
+    <span>&copy; <span id="yr"></span> Nemo <b>//</b> <span data-i18n="foot_lbl">прайс</span></span>
+    <span data-i18n="foot_note">цены ориентировочные</span>
   </div>
 </footer>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+var I18N = {"nav_history": {"ru": "[ история ]", "uk": "[ історія ]", "en": "[ story ]", "kz": "[ тарих ]"}, "nav_faq": {"ru": "[ faq ]", "uk": "[ faq ]", "en": "[ faq ]", "kz": "[ faq ]"}, "nav_home": {"ru": "← главная", "uk": "← головна", "en": "← home", "kz": "← басты"}, "p_boot": {"ru": "pricing.load() // цены примерные", "uk": "pricing.load() // ціни орієнтовні", "en": "pricing.load() // prices are approximate", "kz": "pricing.load() // бағалар шамамен"}, "p_title": {"ru": "Прайс", "uk": "Ціни", "en": "Pricing", "kz": "Бағалар"}, "p_lede": {"ru": "Ориентировочные ставки на <b>ботов</b> (Telegram, Discord и др.), <b>автоматизацию</b> и <b>бэкенды</b>. Точная цена — после обсуждения задачи: зависит от объёма, сроков и логики.", "uk": "Орієнтовні ставки на <b>ботів</b> (Telegram, Discord тощо), <b>автоматизацію</b> та <b>бекенди</b>. Точна ціна — після обговорення задачі: залежить від обсягу, термінів і логіки.", "en": "Approximate rates for <b>bots</b> (Telegram, Discord and more), <b>automation</b> and <b>backends</b>. The exact price comes after we discuss the task: it depends on scope, deadlines and logic.", "kz": "<b>Боттарға</b> (Telegram, Discord және т.б.), <b>автоматтандыруға</b> және <b>бэкендтерге</b> шамамен бағалар. Нақты баға — тапсырманы талқылағаннан кейін: көлемге, мерзімге және логикаға байланысты."}, "t1_kind": {"ru": "./базовый бот", "uk": "./базовий бот", "en": "./basic bot", "kz": "./негізгі бот"}, "t1_h": {"ru": "Простой бот", "uk": "Простий бот", "en": "Basic bot", "kz": "Қарапайым бот"}, "t1_term": {"ru": "срок ~1–3 дня", "uk": "термін ~1–3 дні", "en": "~1–3 days", "kz": "мерзім ~1–3 күн"}, "t1_f1": {"ru": "бот для Telegram, Discord и др.", "uk": "бот для Telegram, Discord тощо", "en": "bot for Telegram, Discord etc.", "kz": "Telegram, Discord және т.б. үшін бот"}, "t1_f2": {"ru": "до ~5 команд / сценариев", "uk": "до ~5 команд / сценаріїв", "en": "up to ~5 commands / flows", "kz": "~5 команда / сценарийге дейін"}, "t1_f3": {"ru": "простое хранение данных", "uk": "просте зберігання даних", "en": "simple data storage", "kz": "қарапайым деректерді сақтау"}, "t1_f4": {"ru": "деплой на твой/мой сервер", "uk": "деплой на твій/мій сервер", "en": "deploy to your/my server", "kz": "сенің/менің серверге деплой"}, "t2_kind": {"ru": "./бот под ключ", "uk": "./бот під ключ", "en": "./turnkey bot", "kz": "./кілтпен бот"}, "t2_h": {"ru": "Бот PRO", "uk": "Бот PRO", "en": "Bot PRO", "kz": "Бот PRO"}, "t2_term": {"ru": "срок ~4–10 дней", "uk": "термін ~4–10 днів", "en": "~4–10 days", "kz": "мерзім ~4–10 күн"}, "t2_f1": {"ru": "база данных (SQLAlchemy async)", "uk": "база даних (SQLAlchemy async)", "en": "database (SQLAlchemy async)", "kz": "дерекқор (SQLAlchemy async)"}, "t2_f2": {"ru": "приём оплаты / подписки", "uk": "приймання оплати / підписки", "en": "payments / subscriptions", "kz": "төлемдер / жазылымдар"}, "t2_f3": {"ru": "админ-панель и роли", "uk": "адмін-панель і ролі", "en": "admin panel and roles", "kz": "админ-панель және рөлдер"}, "t2_f4": {"ru": "планировщик задач (APScheduler)", "uk": "планувальник задач (APScheduler)", "en": "task scheduler (APScheduler)", "kz": "тапсырма жоспарлағышы (APScheduler)"}, "t2_f5": {"ru": "рассылки, логи, обработка ошибок", "uk": "розсилки, логи, обробка помилок", "en": "broadcasts, logs, error handling", "kz": "тарату, логтар, қателерді өңдеу"}, "t3_kind": {"ru": "./система", "uk": "./система", "en": "./system", "kz": "./жүйе"}, "t3_h": {"ru": "Бот + бэкенд", "uk": "Бот + бекенд", "en": "Bot + backend", "kz": "Бот + бэкенд"}, "t3_term": {"ru": "срок — по ТЗ", "uk": "термін — за ТЗ", "en": "timeline — per spec", "kz": "мерзім — ТТ бойынша"}, "t3_f1": {"ru": "FastAPI-бэкенд / REST API", "uk": "FastAPI-бекенд / REST API", "en": "FastAPI backend / REST API", "kz": "FastAPI-бэкенд / REST API"}, "t3_f2": {"ru": "бот + веб + база в связке", "uk": "бот + веб + база в зв'язці", "en": "bot + web + database together", "kz": "бот + веб + дерекқор бірге"}, "t3_f3": {"ru": "интеграции с внешними API", "uk": "інтеграції із зовнішніми API", "en": "integrations with external APIs", "kz": "сыртқы API-мен интеграциялар"}, "t3_f4": {"ru": "автоматизация процессов", "uk": "автоматизація процесів", "en": "process automation", "kz": "процестерді автоматтандыру"}, "t3_f5": {"ru": "настройка инфры и деплой", "uk": "налаштування інфри та деплой", "en": "infra setup and deployment", "kz": "инфрақұрылымды баптау және деплой"}, "promo_h": {"ru": "С AI-ускорением тебе выгоднее", "uk": "З AI-прискоренням тобі вигідніше", "en": "AI acceleration works in your favor", "kz": "AI-жеделдетумен саған тиімдірек"}, "promo_p": {"ru": "Разрешаешь использовать ИИ в работе — выигрываешь дважды: срок короче, а цена ниже на 20%. ИИ беру на рутину и черновики, но каждую строчку проверяю и довожу вручную — падает только время, не качество.", "uk": "Дозволяєш використовувати ШІ в роботі — виграєш двічі: термін коротший, а ціна нижча на 20%. ШІ беру на рутину та чернетки, але кожен рядок перевіряю і доводжу вручну — падає лише час, не якість.", "en": "Allow AI in the work and you win twice: shorter timeline and 20% lower price. I use AI for routine and drafts, but check and finish every line by hand — only time drops, not quality.", "kz": "Жұмыста AI қолдануға рұқсат берсең — екі есе ұтасың: мерзім қысқа, баға 20%-ға төмен. AI-ды рутина мен нобайларға қолданамын, бірақ әр жолды қолмен тексеріп, пысықтаймын — тек уақыт азаяды, сапа емес."}, "be1": {"ru": "цена −20%", "uk": "ціна −20%", "en": "price −20%", "kz": "баға −20%"}, "be2": {"ru": "скорость", "uk": "швидкість", "en": "speed", "kz": "жылдамдық"}, "be3": {"ru": "то же качество", "uk": "та сама якість", "en": "same quality", "kz": "дәл сол сапа"}, "sec01_a": {"ru": "Отдельно", "uk": "Окремо", "en": "À la carte", "kz": "Бөлек"}, "sec01_b": {"ru": "услуги", "uk": "послуги", "en": "services", "kz": "қызметтер"}, "s1_h": {"ru": "Автоматизация · парсинг", "uk": "Автоматизація · парсинг", "en": "Automation · scraping", "kz": "Автоматтандыру · парсинг"}, "s1_p": {"ru": "сбор данных, парсинг сайтов, скрипты по расписанию", "uk": "збір даних, парсинг сайтів, скрипти за розкладом", "en": "data collection, website scraping, scheduled scripts", "kz": "деректер жинау, сайттарды парсинг, кесте бойынша скриптер"}, "s2_h": {"ru": "FastAPI-бэкенд · REST API", "uk": "FastAPI-бекенд · REST API", "en": "FastAPI backend · REST API", "kz": "FastAPI-бэкенд · REST API"}, "s2_p": {"ru": "асинхронный API под бота или веб, работа с базой", "uk": "асинхронний API для бота або вебу, робота з базою", "en": "async API for a bot or web, database work", "kz": "бот немесе веб үшін асинхронды API, дерекқормен жұмыс"}, "s3_h": {"ru": "AI-интеграция", "uk": "AI-інтеграція", "en": "AI integration", "kz": "AI-интеграция"}, "s3_p": {"ru": "Claude API, транскрипция (whisper), синтез речи, обработка видео", "uk": "Claude API, транскрипція (whisper), синтез мовлення, обробка відео", "en": "Claude API, transcription (whisper), speech synthesis, video processing", "kz": "Claude API, транскрипция (whisper), сөйлеу синтезі, бейне өңдеу"}, "s4_h": {"ru": "Правки · поддержка", "uk": "Правки · підтримка", "en": "Fixes · support", "kz": "Түзетулер · қолдау"}, "s4_p": {"ru": "доработки, фиксы, сопровождение готового проекта", "uk": "доопрацювання, фікси, супровід готового проєкту", "en": "improvements, fixes, maintenance of a finished project", "kz": "жетілдіру, түзетулер, дайын жобаны сүйемелдеу"}, "s5_h": {"ru": "Почасовая ставка", "uk": "Погодинна ставка", "en": "Hourly rate", "kz": "Сағаттық мөлшерлеме"}, "s5_p": {"ru": "для задач без чёткого ТЗ или исследовательских", "uk": "для задач без чіткого ТЗ або дослідницьких", "en": "for tasks without a clear spec or research work", "kz": "нақты ТТ жоқ немесе зерттеу тапсырмалары үшін"}, "u_from": {"ru": "/ от", "uk": "/ від", "en": "/ from", "kz": "/ бастап"}, "u_hour": {"ru": "/ час", "uk": "/ год", "en": "/ hour", "kz": "/ сағат"}, "u_month": {"ru": "/ мес · от", "uk": "/ міс · від", "en": "/ mo · from", "kz": "/ ай · бастап"}, "u_incl": {"ru": "/ входит", "uk": "/ входить", "en": "/ included", "kz": "/ кіреді"}, "sec02_a": {"ru": "Хостинг", "uk": "Хостинг", "en": "Hosting", "kz": "Хостинг"}, "sec02_b": {"ru": "размещение", "uk": "розміщення", "en": "deployment", "kz": "орналастыру"}, "hh1_h": {"ru": "Размещение на моём сервере", "uk": "Розміщення на моєму сервері", "en": "Hosting on my server", "kz": "Менің серверімде орналастыру"}, "hh1_p": {"ru": "бот или скрипт живёт на моей self-hosted инфре — без возни с чужим VPS", "uk": "бот або скрипт живе на моїй self-hosted інфрі — без мороки з чужим VPS", "en": "your bot or script lives on my self-hosted infra — no hassle with someone else's VPS", "kz": "бот немесе скрипт менің self-hosted инфрамда тұрады — бөтен VPS-пен әуре болмайсың"}, "hh2_h": {"ru": "Хостинг + присмотр", "uk": "Хостинг + нагляд", "en": "Hosting + monitoring", "kz": "Хостинг + бақылау"}, "hh2_p": {"ru": "мониторинг, автоперезапуск при сбое, регулярные бэкапы базы", "uk": "моніторинг, автоперезапуск при збої, регулярні бекапи бази", "en": "monitoring, auto-restart on failure, regular database backups", "kz": "мониторинг, іркілісте автоқайта қосу, дерекқордың тұрақты бэкаптары"}, "hh3_h": {"ru": "Деплой на твой сервер / VPS", "uk": "Деплой на твій сервер / VPS", "en": "Deploy to your server / VPS", "kz": "Сенің серверіңе / VPS-ке деплой"}, "hh3_p": {"ru": "настрою и запущу проект на твоей стороне — входит в разработку", "uk": "налаштую та запущу проєкт на твоєму боці — входить у розробку", "en": "I'll set up and launch the project on your side — included in development", "kz": "жобаны сенің жағыңда баптап, іске қосамын — әзірлеуге кіреді"}, "sec03_a": {"ru": "Условия", "uk": "Умови", "en": "Terms", "kz": "Шарттар"}, "sec03_b": {"ru": "как считается", "uk": "як рахується", "en": "how it's counted", "kz": "қалай есептеледі"}, "n1": {"ru": "<b>Цены — «от».</b> Финальная сумма фиксируется после обсуждения задачи и объёма работ.", "uk": "<b>Ціни — «від».</b> Фінальна сума фіксується після обговорення задачі та обсягу робіт.", "en": "<b>Prices are «from».</b> The final amount is fixed after we discuss the task and scope of work.", "kz": "<b>Бағалар — «бастап».</b> Соңғы сома тапсырма мен жұмыс көлемін талқылағаннан кейін бекітіледі."}, "n2": {"ru": "<b>Предоплата 30–50%.</b> Остаток — по факту сдачи рабочего результата.", "uk": "<b>Передоплата 30–50%.</b> Залишок — за фактом здачі робочого результату.", "en": "<b>Prepayment 30–50%.</b> The rest upon delivery of the working result.", "kz": "<b>Алдын ала төлем 30–50%.</b> Қалғаны — жұмыс нәтижесі тапсырылған кезде."}, "n3": {"ru": "<b>Сроки — ориентир.</b> Зависят от загрузки и сложности; уточняются до старта.", "uk": "<b>Терміни — орієнтир.</b> Залежать від завантаженості та складності; уточнюються до старту.", "en": "<b>Timelines are a guideline.</b> They depend on workload and complexity; confirmed before start.", "kz": "<b>Мерзімдер — бағдар.</b> Жүктеме мен күрделілікке байланысты; басталар алдында нақтыланады."}, "n4": {"ru": "<b>Исходники твои.</b> После оплаты код и доступы полностью передаются тебе.", "uk": "<b>Вихідники твої.</b> Після оплати код і доступи повністю передаються тобі.", "en": "<b>The source is yours.</b> After payment the code and access are fully handed over to you.", "kz": "<b>Бастапқы код сенікі.</b> Төлемнен кейін код пен рұқсаттар толығымен саған беріледі."}, "sec04_a": {"ru": "Процесс", "uk": "Процес", "en": "Process", "kz": "Процесс"}, "sec04_b": {"ru": "как всё происходит", "uk": "як усе відбувається", "en": "how it all works", "kz": "бәрі қалай өтеді"}, "st1_h": {"ru": "Заявка", "uk": "Заявка", "en": "Request", "kz": "Өтінім"}, "st1_p": {"ru": "Скидываешь задачу — что нужно, зачем, есть ли примеры. Задаю уточняющие вопросы. Оценка бесплатна.", "uk": "Скидаєш задачу — що потрібно, навіщо, чи є приклади. Ставлю уточнювальні питання. Оцінка безкоштовна.", "en": "You send the task — what's needed, why, any examples. I ask clarifying questions. The estimate is free.", "kz": "Тапсырманы жібересің — не керек, не үшін, мысалдар бар ма. Нақтылаушы сұрақтар қоямын. Бағалау тегін."}, "st2_h": {"ru": "ТЗ и оценка", "uk": "ТЗ та оцінка", "en": "Spec and estimate", "kz": "ТТ және бағалау"}, "st2_p": {"ru": "Фиксируем объём, платформу, стек, срок и цену. Договорённость письменно — чтобы у обоих было одно понимание.", "uk": "Фіксуємо обсяг, платформу, стек, термін і ціну. Домовленість письмово — щоб в обох було однакове розуміння.", "en": "We fix the scope, platform, stack, timeline and price. Agreement in writing — so we both understand it the same way.", "kz": "Көлемді, платформаны, стекті, мерзімді және бағаны бекітеміз. Келісім жазбаша — екеуімізде бір түсінік болуы үшін."}, "st3_h": {"ru": "Предоплата", "uk": "Передоплата", "en": "Prepayment", "kz": "Алдын ала төлем"}, "st3_p": {"ru": "30–50% для старта. Остаток — по факту рабочего результата.", "uk": "30–50% для старту. Залишок — за фактом робочого результату.", "en": "30–50% to start. The rest upon the working result.", "kz": "Бастау үшін 30–50%. Қалғаны — жұмыс нәтижесі бойынша."}, "st4_h": {"ru": "Разработка", "uk": "Розробка", "en": "Development", "kz": "Әзірлеу"}, "st4_p": {"ru": "Пишу и показываю промежуточные версии. Смотришь, даёшь фидбек — правим по ходу, а не в самом конце.", "uk": "Пишу і показую проміжні версії. Дивишся, даєш фідбек — правимо по ходу, а не наприкінці.", "en": "I build and show intermediate versions. You review and give feedback — we fix as we go, not at the very end.", "kz": "Аралық нұсқаларды жазып, көрсетемін. Қарайсың, пікір бересің — соңында емес, барысында түзетеміз."}, "st5_h": {"ru": "Тесты и сдача", "uk": "Тести та здача", "en": "Testing and delivery", "kz": "Тесттер және тапсыру"}, "st5_p": {"ru": "Проверяем на реальных сценариях, вычищаю баги, закрываю замечания.", "uk": "Перевіряємо на реальних сценаріях, вичищаю баги, закриваю зауваження.", "en": "We test on real scenarios, I clean up bugs and close the remarks.", "kz": "Нақты сценарийлерде тексереміз, бактарды тазалаймын, ескертулерді жабамын."}, "st6_h": {"ru": "Деплой и хостинг", "uk": "Деплой і хостинг", "en": "Deploy and hosting", "kz": "Деплой және хостинг"}, "st6_p": {"ru": "Запускаю на твоём сервере или размещаю на своей инфре. Передаю код и все доступы.", "uk": "Запускаю на твоєму сервері або розміщую на своїй інфрі. Передаю код і всі доступи.", "en": "I launch on your server or host on my infra. I hand over the code and all access.", "kz": "Сенің серверіңде іске қосамын немесе өз инфрамда орналастырамын. Кодты және барлық рұқсаттарды беремін."}, "st7_h": {"ru": "Поддержка и доработки", "uk": "Підтримка та доопрацювання", "en": "Support and improvements", "kz": "Қолдау және жетілдіру"}, "st7_p": {"ru": "Дальше — по желанию: фиксы, обновления, новые фичи. Проект живёт и растёт, а не бросается после сдачи.", "uk": "Далі — за бажанням: фікси, оновлення, нові фічі. Проєкт живе й росте, а не кидається після здачі.", "en": "After that, optionally: fixes, updates, new features. The project lives and grows instead of being abandoned after delivery.", "kz": "Әрі қарай — қалауың бойынша: түзетулер, жаңартулар, жаңа мүмкіндіктер. Жоба тапсырылғаннан кейін тасталмай, өмір сүріп, өседі."}, "pol_h": {"ru": "Что не беру в работу", "uk": "Що не беру в роботу", "en": "What I don't take on", "kz": "Не жұмысқа алмаймын"}, "pol_p": {"ru": "Не пишу ботов для спама, накруток, обхода блокировок и любых схем, нарушающих правила площадки или закон. Берусь только за то, за что не прилетит ни тебе, ни мне.", "uk": "Не пишу ботів для спаму, накруток, обходу блокувань та будь-яких схем, що порушують правила платформи або закон. Беруся лише за те, за що не прилетить ні тобі, ні мені.", "en": "I don't build bots for spam, fake engagement, ban evasion or any scheme that breaks platform rules or the law. I only take on what won't come back on you or me.", "kz": "Спам, жалған белсенділік, бұғаттауды айналып өту және платформа ережелерін не заңды бұзатын схемалар үшін бот жазбаймын. Тек саған да, маған да зиян келмейтін нәрсені ғана аламын."}, "cta_h": {"ru": "Обсудим задачу?", "uk": "Обговоримо задачу?", "en": "Let's discuss the task?", "kz": "Тапсырманы талқылайық па?"}, "cta_p": {"ru": "Опиши, что нужно — прикину цену и срок под конкретику. Оценка бесплатная.", "uk": "Опиши, що потрібно — прикину ціну і термін під конкретику. Оцінка безкоштовна.", "en": "Describe what you need — I'll estimate the price and timeline for the specifics. The estimate is free.", "kz": "Не керегін сипатта — нақтылыққа қарай баға мен мерзімді бағалаймын. Бағалау тегін."}, "link_reviews": {"ru": "канал с отзывами", "uk": "канал з відгуками", "en": "reviews channel", "kz": "пікірлер арнасы"}, "foot_lbl": {"ru": "прайс", "uk": "прайс", "en": "pricing", "kz": "баға"}, "foot_note": {"ru": "цены ориентировочные", "uk": "ціни орієнтовні", "en": "prices are approximate", "kz": "бағалар шамамен"}};
+function applyLang(lang){
+  if(!I18N.ru[Object.keys(I18N.ru)[0]] || !["ru","uk","en","kz"].includes(lang)) lang="ru";
+  document.documentElement.lang = (lang==="kz"?"kk":lang);
+  document.querySelectorAll("[data-i18n]").forEach(function(el){
+    var k=el.getAttribute("data-i18n"); if(I18N[k] && I18N[k][lang]!=null) el.innerHTML=I18N[k][lang];
+  });
+  document.querySelectorAll(".glitch").forEach(function(el){ el.setAttribute("data-text", el.textContent); });
+  document.querySelectorAll("#lang button").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-lang")===lang); });
+  document.querySelectorAll("a.page").forEach(function(a){ var base=a.getAttribute("href").split("?")[0]; a.setAttribute("href", base+"?lang="+lang); });
+  try{ history.replaceState(null,"","?lang="+lang+location.hash); }catch(e){}
+}
+function detectLang(){ var p=new URLSearchParams(location.search).get("lang"); if(p&&["ru","uk","en","kz"].includes(p)) return p; var n=(navigator.language||"ru").toLowerCase(); if(n.indexOf("uk")===0)return "uk"; if(n.indexOf("kk")===0||n.indexOf("kz")===0)return "kz"; if(n.indexOf("en")===0)return "en"; return "ru"; }
+document.getElementById("yr").textContent=new Date().getFullYear();
+document.querySelectorAll("#lang button").forEach(function(b){ b.addEventListener("click",function(){ applyLang(b.getAttribute("data-lang")); }); });
+applyLang(detectLang());
+</script>
 </body>
 </html>
