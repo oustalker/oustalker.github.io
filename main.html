@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>oustalker // dev.node</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:        #08060f;
+    --bg-2:      #0d0918;
+    --panel:     rgba(22,14,38,0.55);
+    --line:      #241734;
+    --line-hot:  #3a2352;
+    --text:      #E9E4F4;
+    --muted:     #9184ad;
+    --dim:       #61567c;
+    --magenta:   #FF2D95;
+    --cyan:      #26E0E6;
+    --yellow:    #F5D90A;
+    --maxw:      980px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ambient glow */
+  body::after {
+    content: "";
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(60% 40% at 12% 0%, rgba(255,45,149,0.10), transparent 60%),
+      radial-gradient(50% 45% at 92% 12%, rgba(38,224,230,0.09), transparent 60%);
+  }
+  /* scanlines */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 40; pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0.16) 3px,
+      rgba(0,0,0,0) 4px
+    );
+    mix-blend-mode: multiply;
+    opacity: 0.5;
+  }
+
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 26px;
+  }
+  .mono { font-family: "Share Tech Mono", monospace; }
+
+  .eyebrow {
+    font-family: "Share Tech Mono", monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cyan);
+  }
+
+  /* ---------- header ---------- */
+  header {
+    position: sticky; top: 0; z-index: 30;
+    backdrop-filter: blur(6px);
+    background: rgba(8,6,15,0.78);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .brand {
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    text-shadow: 0 0 12px rgba(255,45,149,0.5);
+  }
+  .brand b { color: var(--magenta); font-weight: 700; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a {
+    font-family: "Share Tech Mono", monospace;
+    font-size: 13px; letter-spacing: 0.05em;
+    color: var(--dim); text-decoration: none;
+    transition: color .16s, text-shadow .16s;
+  }
+  .nav-links a:hover { color: var(--cyan); text-shadow: 0 0 10px rgba(38,224,230,0.6); }
+  @media (max-width: 620px) { .nav-links { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 78px 0 66px; }
+
+  .boot {
+    font-family: "Share Tech Mono", monospace;
+    font-size: 13px; color: var(--cyan);
+    letter-spacing: 0.05em;
+    margin-bottom: 26px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .blip {
+    width: 9px; height: 9px; background: var(--magenta);
+    box-shadow: 0 0 10px var(--magenta), 0 0 20px var(--magenta);
+    animation: flick 1.6s infinite;
+  }
+  @keyframes flick { 0%,100%{opacity:1} 45%{opacity:.35} 50%{opacity:1} }
+
+  .glitch {
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 700;
+    font-size: clamp(46px, 9vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    position: relative;
+    color: var(--text);
+    text-shadow: 0 0 18px rgba(233,228,244,0.15);
+    margin-bottom: 24px;
+  }
+  .glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute; left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+  }
+  .glitch::before {
+    color: var(--magenta);
+    clip-path: inset(0 0 55% 0);
+    transform: translate(-2px,-1px);
+    animation: gl-top 3.4s infinite steps(2);
+    mix-blend-mode: screen;
+  }
+  .glitch::after {
+    color: var(--cyan);
+    clip-path: inset(52% 0 0 0);
+    transform: translate(2px,1px);
+    animation: gl-bot 2.8s infinite steps(2);
+    mix-blend-mode: screen;
+  }
+  @keyframes gl-top {
+    0%,92%,100% { transform: translate(-2px,-1px); }
+    93% { transform: translate(3px,-2px); }
+    96% { transform: translate(-4px,0); }
+  }
+  @keyframes gl-bot {
+    0%,90%,100% { transform: translate(2px,1px); }
+    91% { transform: translate(-3px,2px); }
+    95% { transform: translate(4px,0); }
+  }
+
+  .lede {
+    font-size: clamp(16px, 2.3vw, 20px);
+    color: #c8c1dc; max-width: 640px; margin-bottom: 32px;
+  }
+  .lede b { color: var(--text); font-weight: 600; border-bottom: 1px solid var(--magenta); }
+
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 8px 20px;
+    font-family: "Share Tech Mono", monospace;
+    font-size: 13px; color: var(--dim); letter-spacing: 0.03em;
+  }
+  .meta span i { color: var(--cyan); font-style: normal; }
+
+  /* ---------- sections ---------- */
+  section { padding: 58px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 36px; }
+  .sec-head .idx {
+    font-family: "Share Tech Mono", monospace; font-size: 13px;
+    color: var(--magenta); letter-spacing: 0.1em;
+  }
+  .sec-head h2 {
+    font-family: "Chakra Petch", sans-serif; font-weight: 600;
+    font-size: clamp(24px, 4vw, 34px); letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+  .sec-head h2 .slash { color: var(--cyan); }
+
+  /* ---------- modules (HUD cards) ---------- */
+  .modules { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .modules { grid-template-columns: 1fr; } }
+
+  .mod {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--line-hot);
+    padding: 26px 24px;
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .mod:hover {
+    border-color: var(--magenta);
+    box-shadow: 0 0 0 1px rgba(255,45,149,0.3), 0 0 26px rgba(255,45,149,0.14);
+    transform: translateY(-2px);
+  }
+  /* HUD corner brackets */
+  .mod::before, .mod::after {
+    content: ""; position: absolute; width: 12px; height: 12px;
+    border-color: var(--cyan); border-style: solid;
+  }
+  .mod::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+  .mod::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+  .mod .k {
+    font-family: "Share Tech Mono", monospace; font-size: 12px;
+    color: var(--cyan); letter-spacing: 0.06em; display: block; margin-bottom: 14px;
+  }
+  .mod h3 {
+    font-family: "Chakra Petch", sans-serif; font-weight: 600;
+    font-size: 20px; margin-bottom: 10px; letter-spacing: 0.01em;
+  }
+  .mod p { font-size: 14.5px; color: var(--muted); margin-bottom: 18px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag {
+    font-family: "Share Tech Mono", monospace; font-size: 11.5px;
+    color: var(--text); border: 1px solid var(--line-hot);
+    padding: 3px 9px; letter-spacing: 0.02em;
+  }
+  .tag::before { content: "› "; color: var(--magenta); }
+
+  /* ---------- stack ---------- */
+  .stack-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(210px,1fr)); gap: 26px 36px; }
+  .g-label {
+    font-family: "Share Tech Mono", monospace; font-size: 12px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--cyan);
+    padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid var(--line-hot);
+  }
+  .stack-group ul { list-style: none; }
+  .stack-group li {
+    font-family: "Share Tech Mono", monospace; font-size: 14px;
+    color: #d3cbe6; padding: 5px 0; display: flex; align-items: center; gap: 10px;
+  }
+  .stack-group li::before {
+    content: "▪"; color: var(--magenta); font-size: 10px;
+    text-shadow: 0 0 8px var(--magenta);
+  }
+
+  /* ---------- approach ---------- */
+  .approach { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  @media (max-width: 700px) { .approach { grid-template-columns: 1fr; } }
+  .ap {
+    background: var(--panel); border: 1px solid var(--line); padding: 26px 22px;
+    position: relative;
+  }
+  .ap .n {
+    font-family: "Share Tech Mono", monospace; font-size: 13px;
+    color: var(--magenta); display: block; margin-bottom: 14px; letter-spacing: 0.06em;
+  }
+  .ap h4 { font-family: "Chakra Petch", sans-serif; font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .ap p { font-size: 13.5px; color: var(--muted); }
+
+  /* ---------- contact ---------- */
+  .contact-box {
+    position: relative;
+    border: 1px solid var(--line-hot);
+    background: linear-gradient(180deg, rgba(255,45,149,0.05), rgba(38,224,230,0.03));
+    padding: 38px 32px;
+  }
+  .contact-box p { color: #cbc4de; font-size: 16px; max-width: 520px; margin-bottom: 24px; }
+  .links { display: flex; flex-wrap: wrap; gap: 12px; }
+  .lnk {
+    font-family: "Share Tech Mono", monospace; font-size: 14px;
+    color: var(--text); text-decoration: none;
+    border: 1px solid var(--line-hot); padding: 11px 18px;
+    display: inline-flex; align-items: center; gap: 9px;
+    transition: border-color .16s, box-shadow .16s, color .16s;
+  }
+  .lnk:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 18px rgba(38,224,230,0.2); }
+  .lnk .arw { color: var(--magenta); }
+  .lnk.reviews { border-color: var(--magenta); }
+  .lnk.reviews:hover { color: var(--magenta); border-color: var(--magenta); box-shadow: 0 0 18px rgba(255,45,149,0.22); }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 28px 0 44px; }
+  .foot {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    font-family: "Share Tech Mono", monospace; font-size: 12.5px; color: var(--dim);
+    letter-spacing: 0.05em;
+  }
+  .foot b { color: var(--magenta); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glitch::before, .glitch::after, .blip { animation: none; }
+    .glitch::before { clip-path: none; transform: none; opacity: 0; }
+    .glitch::after  { clip-path: none; transform: none; opacity: 0; }
+    html { scroll-behavior: auto; }
+  }
+  :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+  .fade { opacity: 0; transform: translateY(14px); animation: rise .6s ease forwards; }
+  .fade.d1 { animation-delay: .05s; } .fade.d2 { animation-delay: .14s; } .fade.d3 { animation-delay: .22s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .fade { animation: none; opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand"><b>//</b> oustalker</div>
+    <nav class="nav-links">
+      <a href="#build">[ модули ]</a>
+      <a href="#stack">[ стек ]</a>
+      <a href="oustalker-price.html">[ прайс ]</a>
+      <a href="oustalker-history.html">[ история ]</a>
+      <a href="oustalker-faq.html">[ faq ]</a>
+      <a href="#contact">[ связь ]</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" style="border-top:none">
+    <div class="wrap">
+      <div class="boot fade d1">
+        <span class="blip"></span> node.status = ONLINE // открыт к задачам
+      </div>
+      <h1 class="glitch fade d1" data-text="oustalker">oustalker</h1>
+      <p class="lede fade d2">
+        Python-разработчик. Строю <b>ботов</b> (Telegram, Discord и др.), <b>пайплайны автоматизации</b> и <b>бэкенды на FastAPI</b> — от идеи до сервиса, который крутится в проде сам.
+      </p>
+      <div class="meta fade d3">
+        <span><i>&gt;</i> focus: боты · автоматизация · AI</span>
+        <span><i>&gt;</i> core: Python / FastAPI / aiogram</span>
+        <span><i>&gt;</i> self-hosted: true</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section id="build">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx mono">01</span>
+        <h2>Модули<span class="slash"> // </span>что делаю</h2>
+      </div>
+      <div class="modules">
+        <div class="mod">
+          <span class="k mono">./bots</span>
+          <h3>Боты</h3>
+          <p>Боты для Telegram, Discord и других площадок: от утилит до многопользовательских сервисов с базой, платежами, ролями и планировщиком.</p>
+          <div class="tags"><span class="tag">Telegram</span><span class="tag">Discord</span><span class="tag">SQLAlchemy</span><span class="tag">APScheduler</span></div>
+        </div>
+        <div class="mod">
+          <span class="k mono">./automation</span>
+          <h3>Автоматизация · парсинг</h3>
+          <p>Скрипты и пайплайны, что делают рутину за тебя: сбор данных, парсинг сайтов, обработка по расписанию, работа с браузером.</p>
+          <div class="tags"><span class="tag">Playwright</span><span class="tag">APScheduler</span><span class="tag">aiosqlite</span></div>
+        </div>
+        <div class="mod">
+          <span class="k mono">./backend</span>
+          <h3>FastAPI-бэкенды</h3>
+          <p>REST API и бэкенды под ботов и веб. Асинхронно, с вменяемой структурой и нормальной работой с базой.</p>
+          <div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLAlchemy async</span></div>
+        </div>
+        <div class="mod">
+          <span class="k mono">./ai_media</span>
+          <h3>AI-агенты · медиа</h3>
+          <p>Интеграции с Claude API и обработка медиа: транскрипция аудио, синтез речи, сборка и монтаж видео под задачу.</p>
+          <div class="tags"><span class="tag">Claude API</span><span class="tag">faster-whisper</span><span class="tag">edge-tts</span><span class="tag">MoviePy</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx mono">02</span>
+        <h2>Стек<span class="slash"> // </span>инструменты</h2>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-group"><div class="g-label">язык · фреймворки</div><ul><li>Python</li><li>FastAPI</li><li>aiogram 3.x</li></ul></div>
+        <div class="stack-group"><div class="g-label">данные</div><ul><li>SQLAlchemy (async)</li><li>aiosqlite</li></ul></div>
+        <div class="stack-group"><div class="g-label">автоматизация</div><ul><li>APScheduler</li><li>Playwright</li></ul></div>
+        <div class="stack-group"><div class="g-label">ai · медиа</div><ul><li>Claude API</li><li>faster-whisper</li><li>edge-tts</li><li>MoviePy</li></ul></div>
+        <div class="stack-group"><div class="g-label">инфраструктура</div><ul><li>Raspberry Pi</li><li>WireGuard</li><li>self-hosted</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section id="approach">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx mono">03</span>
+        <h2>Протокол<span class="slash"> // </span>как работаю</h2>
+      </div>
+      <div class="approach">
+        <div class="ap"><span class="n mono">&gt; 01</span><h4>Самоучка на практике</h4><p>Учусь на реальных проектах, а не на бесконечных туториалах. Каждая штука в стеке — из живой задачи.</p></div>
+        <div class="ap"><span class="n mono">&gt; 02</span><h4>Довожу до рабочего</h4><p>Цель — не демка, а сервис, что запущен и работает. Асинхронность по умолчанию, чистая структура.</p></div>
+        <div class="ap"><span class="n mono">&gt; 03</span><h4>Держу инфру сам</h4><p>Свой self-hosted хостинг, деплой, сеть. Понимаю путь от кода до железа, а не только уровень библиотек.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx mono">04</span>
+        <h2>Связь<span class="slash"> // </span>контакт</h2>
+      </div>
+      <div class="contact-box">
+        <p>Нужен бот, автоматизация или бэкенд? Скинь задачу — прикину, как сделать и в какие сроки.</p>
+        <div class="links">
+          <a class="lnk reviews" href="https://t.me/REVIEWS_CHANNEL" target="_blank" rel="noopener"><span class="arw">★</span> канал с отзывами</a>
+          <a class="lnk" href="https://github.com/oustalker" target="_blank" rel="noopener"><span class="arw">↗</span> github.com/oustalker</a>
+          <a class="lnk" href="#" data-edit="telegram"><span class="arw">↗</span> Telegram · @впиши_ник</a>
+          <a class="lnk" href="#" data-edit="email"><span class="arw">↗</span> email · впиши_почту</a>
+        </div>
+        <p style="margin-top:20px; font-family:'Share Tech Mono',monospace; font-size:12.5px; color:var(--dim); letter-spacing:0.02em;">
+          &gt; не берусь за спам, накрутки и всё, что нарушает правила площадки или закон
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="yr"></span> oustalker <b>//</b> dev.node</span>
+    <span>built &amp; hosted by hand</span>
+  </div>
+</footer>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
