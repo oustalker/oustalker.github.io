@@ -3,304 +3,107 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>oustalker // dev.node</title>
+<title>Nemo // dev.node</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg:        #08060f;
-    --bg-2:      #0d0918;
-    --panel:     rgba(22,14,38,0.55);
-    --line:      #241734;
-    --line-hot:  #3a2352;
-    --text:      #E9E4F4;
-    --muted:     #9184ad;
-    --dim:       #61567c;
-    --magenta:   #FF2D95;
-    --cyan:      #26E0E6;
-    --yellow:    #F5D90A;
-    --maxw:      980px;
+    --bg:#08060f; --bg-2:#0d0918; --panel:rgba(22,14,38,0.55);
+    --line:#241734; --line-hot:#3a2352;
+    --text:#E9E4F4; --muted:#9184ad; --dim:#61567c;
+    --magenta:#FF2D95; --cyan:#26E0E6; --yellow:#F5D90A;
+    --maxw:980px;
   }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",system-ui,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  body::after { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; background: radial-gradient(60% 40% at 12% 0%, rgba(255,45,149,0.10), transparent 60%), radial-gradient(50% 45% at 92% 12%, rgba(38,224,230,0.09), transparent 60%); }
+  body::before { content:""; position:fixed; inset:0; z-index:40; pointer-events:none; background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.16) 3px, rgba(0,0,0,0) 4px); mix-blend-mode:multiply; opacity:0.5; }
+  .wrap { position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:0 26px; }
+  .mono { font-family:"Share Tech Mono",monospace; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  header { position:sticky; top:0; z-index:30; backdrop-filter:blur(6px); background:rgba(8,6,15,0.78); border-bottom:1px solid var(--line); }
+  .nav { display:flex; align-items:center; justify-content:space-between; height:56px; gap:14px; }
+  .brand { font-family:"Chakra Petch",sans-serif; font-weight:700; font-size:16px; letter-spacing:0.04em; text-shadow:0 0 12px rgba(255,45,149,0.5); white-space:nowrap; }
+  .brand b { color:var(--magenta); }
+  .nav-right { display:flex; align-items:center; gap:16px; }
+  .nav-links { display:flex; gap:22px; }
+  .nav-links a { font-family:"Share Tech Mono",monospace; font-size:13px; letter-spacing:0.05em; color:var(--dim); text-decoration:none; transition:color .16s, text-shadow .16s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--cyan); text-shadow:0 0 10px rgba(38,224,230,0.6); }
+  @media (max-width:720px) { .nav-links { display:none; } }
+  .lang { display:flex; gap:4px; flex:none; }
+  .lang button { font-family:"Share Tech Mono",monospace; font-size:11.5px; letter-spacing:0.04em; color:var(--dim); background:none; border:1px solid var(--line); padding:4px 7px; cursor:pointer; transition:color .16s, border-color .16s; }
+  .lang button:hover { color:var(--text); }
+  .lang button.active { color:var(--cyan); border-color:var(--cyan); text-shadow:0 0 8px rgba(38,224,230,0.5); }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: "IBM Plex Sans", system-ui, sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  /* ambient glow */
-  body::after {
-    content: "";
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      radial-gradient(60% 40% at 12% 0%, rgba(255,45,149,0.10), transparent 60%),
-      radial-gradient(50% 45% at 92% 12%, rgba(38,224,230,0.09), transparent 60%);
-  }
-  /* scanlines */
-  body::before {
-    content: "";
-    position: fixed; inset: 0; z-index: 40; pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(0,0,0,0) 0px,
-      rgba(0,0,0,0) 2px,
-      rgba(0,0,0,0.16) 3px,
-      rgba(0,0,0,0) 4px
-    );
-    mix-blend-mode: multiply;
-    opacity: 0.5;
-  }
-
-  .wrap {
-    position: relative; z-index: 1;
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: 0 26px;
-  }
-  .mono { font-family: "Share Tech Mono", monospace; }
-
-  .eyebrow {
-    font-family: "Share Tech Mono", monospace;
-    font-size: 12.5px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--cyan);
-  }
-
-  /* ---------- header ---------- */
-  header {
-    position: sticky; top: 0; z-index: 30;
-    backdrop-filter: blur(6px);
-    background: rgba(8,6,15,0.78);
-    border-bottom: 1px solid var(--line);
-  }
-  .nav { display: flex; align-items: center; justify-content: space-between; height: 56px; }
-  .brand {
-    font-family: "Chakra Petch", sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: 0.04em;
-    color: var(--text);
-    text-shadow: 0 0 12px rgba(255,45,149,0.5);
-  }
-  .brand b { color: var(--magenta); font-weight: 700; }
-  .nav-links { display: flex; gap: 24px; }
-  .nav-links a {
-    font-family: "Share Tech Mono", monospace;
-    font-size: 13px; letter-spacing: 0.05em;
-    color: var(--dim); text-decoration: none;
-    transition: color .16s, text-shadow .16s;
-  }
-  .nav-links a:hover { color: var(--cyan); text-shadow: 0 0 10px rgba(38,224,230,0.6); }
-  @media (max-width: 620px) { .nav-links { display: none; } }
-
-  /* ---------- hero ---------- */
-  .hero { padding: 78px 0 66px; }
-
-  .boot {
-    font-family: "Share Tech Mono", monospace;
-    font-size: 13px; color: var(--cyan);
-    letter-spacing: 0.05em;
-    margin-bottom: 26px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .blip {
-    width: 9px; height: 9px; background: var(--magenta);
-    box-shadow: 0 0 10px var(--magenta), 0 0 20px var(--magenta);
-    animation: flick 1.6s infinite;
-  }
+  .hero { padding:78px 0 66px; }
+  .boot { font-family:"Share Tech Mono",monospace; font-size:13px; color:var(--cyan); letter-spacing:0.05em; margin-bottom:26px; display:flex; align-items:center; gap:10px; }
+  .blip { width:9px; height:9px; background:var(--magenta); box-shadow:0 0 10px var(--magenta),0 0 20px var(--magenta); animation:flick 1.6s infinite; }
   @keyframes flick { 0%,100%{opacity:1} 45%{opacity:.35} 50%{opacity:1} }
+  .glitch { font-family:"Chakra Petch",sans-serif; font-weight:700; font-size:clamp(46px, 9vw, 96px); line-height:0.95; letter-spacing:-0.02em; position:relative; color:var(--text); text-shadow:0 0 18px rgba(233,228,244,0.15); margin-bottom:24px; }
+  .glitch::before, .glitch::after { content:attr(data-text); position:absolute; left:0; top:0; width:100%; height:100%; overflow:hidden; }
+  .glitch::before { color:var(--magenta); clip-path:inset(0 0 55% 0); transform:translate(-2px,-1px); animation:gl-top 3.4s infinite steps(2); mix-blend-mode:screen; }
+  .glitch::after { color:var(--cyan); clip-path:inset(52% 0 0 0); transform:translate(2px,1px); animation:gl-bot 2.8s infinite steps(2); mix-blend-mode:screen; }
+  @keyframes gl-top { 0%,92%,100% { transform:translate(-2px,-1px); } 93% { transform:translate(3px,-2px); } 96% { transform:translate(-4px,0); } }
+  @keyframes gl-bot { 0%,90%,100% { transform:translate(2px,1px); } 91% { transform:translate(-3px,2px); } 95% { transform:translate(4px,0); } }
+  .lede { font-size:clamp(16px, 2.3vw, 20px); color:#c8c1dc; max-width:640px; margin-bottom:32px; }
+  .lede b { color:var(--text); font-weight:600; border-bottom:1px solid var(--magenta); }
+  .meta { display:flex; flex-wrap:wrap; gap:8px 20px; font-family:"Share Tech Mono",monospace; font-size:13px; color:var(--dim); letter-spacing:0.03em; }
+  .meta span i { color:var(--cyan); font-style:normal; }
 
-  .glitch {
-    font-family: "Chakra Petch", sans-serif;
-    font-weight: 700;
-    font-size: clamp(46px, 9vw, 96px);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    position: relative;
-    color: var(--text);
-    text-shadow: 0 0 18px rgba(233,228,244,0.15);
-    margin-bottom: 24px;
-  }
-  .glitch::before, .glitch::after {
-    content: attr(data-text);
-    position: absolute; left: 0; top: 0;
-    width: 100%; height: 100%;
-    overflow: hidden;
-  }
-  .glitch::before {
-    color: var(--magenta);
-    clip-path: inset(0 0 55% 0);
-    transform: translate(-2px,-1px);
-    animation: gl-top 3.4s infinite steps(2);
-    mix-blend-mode: screen;
-  }
-  .glitch::after {
-    color: var(--cyan);
-    clip-path: inset(52% 0 0 0);
-    transform: translate(2px,1px);
-    animation: gl-bot 2.8s infinite steps(2);
-    mix-blend-mode: screen;
-  }
-  @keyframes gl-top {
-    0%,92%,100% { transform: translate(-2px,-1px); }
-    93% { transform: translate(3px,-2px); }
-    96% { transform: translate(-4px,0); }
-  }
-  @keyframes gl-bot {
-    0%,90%,100% { transform: translate(2px,1px); }
-    91% { transform: translate(-3px,2px); }
-    95% { transform: translate(4px,0); }
-  }
+  section { padding:58px 0; border-top:1px solid var(--line); }
+  .sec-head { display:flex; align-items:baseline; gap:14px; margin-bottom:36px; }
+  .sec-head .idx { font-family:"Share Tech Mono",monospace; font-size:13px; color:var(--magenta); letter-spacing:0.1em; }
+  .sec-head h2 { font-family:"Chakra Petch",sans-serif; font-weight:600; font-size:clamp(24px, 4vw, 34px); letter-spacing:0.01em; text-transform:uppercase; }
+  .sec-head h2 .slash { color:var(--cyan); }
 
-  .lede {
-    font-size: clamp(16px, 2.3vw, 20px);
-    color: #c8c1dc; max-width: 640px; margin-bottom: 32px;
-  }
-  .lede b { color: var(--text); font-weight: 600; border-bottom: 1px solid var(--magenta); }
+  .modules { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:640px) { .modules { grid-template-columns:1fr; } }
+  .mod { position:relative; background:var(--panel); border:1px solid var(--line-hot); padding:26px 24px; transition:border-color .2s, box-shadow .2s, transform .2s; }
+  .mod:hover { border-color:var(--magenta); box-shadow:0 0 0 1px rgba(255,45,149,0.3), 0 0 26px rgba(255,45,149,0.14); transform:translateY(-2px); }
+  .mod::before, .mod::after { content:""; position:absolute; width:12px; height:12px; border-color:var(--cyan); border-style:solid; }
+  .mod::before { top:-1px; left:-1px; border-width:1px 0 0 1px; }
+  .mod::after { bottom:-1px; right:-1px; border-width:0 1px 1px 0; }
+  .mod .k { font-family:"Share Tech Mono",monospace; font-size:12px; color:var(--cyan); letter-spacing:0.06em; display:block; margin-bottom:14px; }
+  .mod h3 { font-family:"Chakra Petch",sans-serif; font-weight:600; font-size:20px; margin-bottom:10px; letter-spacing:0.01em; }
+  .mod p { font-size:14.5px; color:var(--muted); margin-bottom:18px; }
+  .tags { display:flex; flex-wrap:wrap; gap:7px; }
+  .tag { font-family:"Share Tech Mono",monospace; font-size:11.5px; color:var(--text); border:1px solid var(--line-hot); padding:3px 9px; letter-spacing:0.02em; }
+  .tag::before { content:"> "; color:var(--magenta); }
 
-  .meta {
-    display: flex; flex-wrap: wrap; gap: 8px 20px;
-    font-family: "Share Tech Mono", monospace;
-    font-size: 13px; color: var(--dim); letter-spacing: 0.03em;
-  }
-  .meta span i { color: var(--cyan); font-style: normal; }
+  .stack-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:26px 36px; }
+  .g-label { font-family:"Share Tech Mono",monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--cyan); padding-bottom:10px; margin-bottom:12px; border-bottom:1px solid var(--line-hot); }
+  .stack-group ul { list-style:none; }
+  .stack-group li { font-family:"Share Tech Mono",monospace; font-size:14px; color:#d3cbe6; padding:5px 0; display:flex; align-items:center; gap:10px; }
+  .stack-group li::before { content:"\25AA"; color:var(--magenta); font-size:10px; text-shadow:0 0 8px var(--magenta); }
 
-  /* ---------- sections ---------- */
-  section { padding: 58px 0; border-top: 1px solid var(--line); }
-  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 36px; }
-  .sec-head .idx {
-    font-family: "Share Tech Mono", monospace; font-size: 13px;
-    color: var(--magenta); letter-spacing: 0.1em;
-  }
-  .sec-head h2 {
-    font-family: "Chakra Petch", sans-serif; font-weight: 600;
-    font-size: clamp(24px, 4vw, 34px); letter-spacing: 0.01em;
-    text-transform: uppercase;
-  }
-  .sec-head h2 .slash { color: var(--cyan); }
+  .approach { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:700px) { .approach { grid-template-columns:1fr; } }
+  .ap { background:var(--panel); border:1px solid var(--line); padding:26px 22px; position:relative; }
+  .ap .n { font-family:"Share Tech Mono",monospace; font-size:13px; color:var(--magenta); display:block; margin-bottom:14px; letter-spacing:0.06em; }
+  .ap h4 { font-family:"Chakra Petch",sans-serif; font-size:17px; font-weight:600; margin-bottom:8px; }
+  .ap p { font-size:13.5px; color:var(--muted); }
 
-  /* ---------- modules (HUD cards) ---------- */
-  .modules { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 640px) { .modules { grid-template-columns: 1fr; } }
+  .contact-box { position:relative; border:1px solid var(--line-hot); background:linear-gradient(180deg, rgba(255,45,149,0.05), rgba(38,224,230,0.03)); padding:38px 32px; }
+  .contact-box p { color:#cbc4de; font-size:16px; max-width:520px; margin-bottom:24px; }
+  .links { display:flex; flex-wrap:wrap; gap:12px; }
+  .lnk { font-family:"Share Tech Mono",monospace; font-size:14px; color:var(--text); text-decoration:none; border:1px solid var(--line-hot); padding:11px 18px; display:inline-flex; align-items:center; gap:9px; transition:border-color .16s, box-shadow .16s, color .16s; }
+  .lnk:hover { border-color:var(--cyan); color:var(--cyan); box-shadow:0 0 18px rgba(38,224,230,0.2); }
+  .lnk .arw { color:var(--magenta); }
+  .lnk.reviews { border-color:var(--magenta); }
+  .lnk.reviews:hover { color:var(--magenta); border-color:var(--magenta); box-shadow:0 0 18px rgba(255,45,149,0.22); }
 
-  .mod {
-    position: relative;
-    background: var(--panel);
-    border: 1px solid var(--line-hot);
-    padding: 26px 24px;
-    transition: border-color .2s, box-shadow .2s, transform .2s;
-  }
-  .mod:hover {
-    border-color: var(--magenta);
-    box-shadow: 0 0 0 1px rgba(255,45,149,0.3), 0 0 26px rgba(255,45,149,0.14);
-    transform: translateY(-2px);
-  }
-  /* HUD corner brackets */
-  .mod::before, .mod::after {
-    content: ""; position: absolute; width: 12px; height: 12px;
-    border-color: var(--cyan); border-style: solid;
-  }
-  .mod::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
-  .mod::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+  footer { border-top:1px solid var(--line); padding:28px 0 44px; }
+  .foot { display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; font-family:"Share Tech Mono",monospace; font-size:12.5px; color:var(--dim); letter-spacing:0.05em; }
+  .foot b { color:var(--magenta); }
 
-  .mod .k {
-    font-family: "Share Tech Mono", monospace; font-size: 12px;
-    color: var(--cyan); letter-spacing: 0.06em; display: block; margin-bottom: 14px;
-  }
-  .mod h3 {
-    font-family: "Chakra Petch", sans-serif; font-weight: 600;
-    font-size: 20px; margin-bottom: 10px; letter-spacing: 0.01em;
-  }
-  .mod p { font-size: 14.5px; color: var(--muted); margin-bottom: 18px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
-  .tag {
-    font-family: "Share Tech Mono", monospace; font-size: 11.5px;
-    color: var(--text); border: 1px solid var(--line-hot);
-    padding: 3px 9px; letter-spacing: 0.02em;
-  }
-  .tag::before { content: "› "; color: var(--magenta); }
-
-  /* ---------- stack ---------- */
-  .stack-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(210px,1fr)); gap: 26px 36px; }
-  .g-label {
-    font-family: "Share Tech Mono", monospace; font-size: 12px;
-    letter-spacing: 0.16em; text-transform: uppercase; color: var(--cyan);
-    padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid var(--line-hot);
-  }
-  .stack-group ul { list-style: none; }
-  .stack-group li {
-    font-family: "Share Tech Mono", monospace; font-size: 14px;
-    color: #d3cbe6; padding: 5px 0; display: flex; align-items: center; gap: 10px;
-  }
-  .stack-group li::before {
-    content: "▪"; color: var(--magenta); font-size: 10px;
-    text-shadow: 0 0 8px var(--magenta);
-  }
-
-  /* ---------- approach ---------- */
-  .approach { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-  @media (max-width: 700px) { .approach { grid-template-columns: 1fr; } }
-  .ap {
-    background: var(--panel); border: 1px solid var(--line); padding: 26px 22px;
-    position: relative;
-  }
-  .ap .n {
-    font-family: "Share Tech Mono", monospace; font-size: 13px;
-    color: var(--magenta); display: block; margin-bottom: 14px; letter-spacing: 0.06em;
-  }
-  .ap h4 { font-family: "Chakra Petch", sans-serif; font-size: 17px; font-weight: 600; margin-bottom: 8px; }
-  .ap p { font-size: 13.5px; color: var(--muted); }
-
-  /* ---------- contact ---------- */
-  .contact-box {
-    position: relative;
-    border: 1px solid var(--line-hot);
-    background: linear-gradient(180deg, rgba(255,45,149,0.05), rgba(38,224,230,0.03));
-    padding: 38px 32px;
-  }
-  .contact-box p { color: #cbc4de; font-size: 16px; max-width: 520px; margin-bottom: 24px; }
-  .links { display: flex; flex-wrap: wrap; gap: 12px; }
-  .lnk {
-    font-family: "Share Tech Mono", monospace; font-size: 14px;
-    color: var(--text); text-decoration: none;
-    border: 1px solid var(--line-hot); padding: 11px 18px;
-    display: inline-flex; align-items: center; gap: 9px;
-    transition: border-color .16s, box-shadow .16s, color .16s;
-  }
-  .lnk:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 18px rgba(38,224,230,0.2); }
-  .lnk .arw { color: var(--magenta); }
-  .lnk.reviews { border-color: var(--magenta); }
-  .lnk.reviews:hover { color: var(--magenta); border-color: var(--magenta); box-shadow: 0 0 18px rgba(255,45,149,0.22); }
-
-  /* ---------- footer ---------- */
-  footer { border-top: 1px solid var(--line); padding: 28px 0 44px; }
-  .foot {
-    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
-    font-family: "Share Tech Mono", monospace; font-size: 12.5px; color: var(--dim);
-    letter-spacing: 0.05em;
-  }
-  .foot b { color: var(--magenta); }
-
-  @media (prefers-reduced-motion: reduce) {
-    .glitch::before, .glitch::after, .blip { animation: none; }
-    .glitch::before { clip-path: none; transform: none; opacity: 0; }
-    .glitch::after  { clip-path: none; transform: none; opacity: 0; }
-    html { scroll-behavior: auto; }
-  }
-  :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
-
-  .fade { opacity: 0; transform: translateY(14px); animation: rise .6s ease forwards; }
-  .fade.d1 { animation-delay: .05s; } .fade.d2 { animation-delay: .14s; } .fade.d3 { animation-delay: .22s; }
-  @keyframes rise { to { opacity: 1; transform: none; } }
-  @media (prefers-reduced-motion: reduce) { .fade { animation: none; opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .glitch::before, .glitch::after, .blip { animation:none; } .glitch::before { clip-path:none; transform:none; opacity:0; } .glitch::after { clip-path:none; transform:none; opacity:0; } html { scroll-behavior:auto; } }
+  :focus-visible { outline:2px solid var(--cyan); outline-offset:3px; }
+  .fade { opacity:0; transform:translateY(14px); animation:rise .6s ease forwards; }
+  .fade.d1 { animation-delay:.05s; } .fade.d2 { animation-delay:.14s; } .fade.d3 { animation-delay:.22s; }
+  @keyframes rise { to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { .fade { animation:none; opacity:1; transform:none; } }
 </style>
 </head>
 <body>
@@ -308,120 +111,85 @@
 <header>
   <div class="wrap nav">
     <div class="brand"><b>//</b> Nemo</div>
-    <nav class="nav-links">
-      <a href="#build">[ модули ]</a>
-      <a href="#stack">[ стек ]</a>
-      <a href="price.html">[ прайс ]</a>
-      <a href="history.html">[ история ]</a>
-      <a href="faq.html">[ faq ]</a>
-      <a href="#contact">[ связь ]</a>
-    </nav>
+    <div class="nav-right">
+      <nav class="nav-links">
+        <a href="#build" data-i18n="nav_modules">[ модули ]</a>
+        <a href="#stack" data-i18n="nav_stack">[ стек ]</a>
+        <a class="page" href="price.html" data-i18n="nav_price">[ прайс ]</a>
+        <a class="page" href="history.html" data-i18n="nav_history">[ история ]</a>
+        <a class="page" href="faq.html" data-i18n="nav_faq">[ faq ]</a>
+        <a href="#contact" data-i18n="nav_contact">[ связь ]</a>
+      </nav>
+      <div class="lang" id="lang">
+        <button data-lang="ru">RU</button>
+        <button data-lang="uk">UK</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="kz">KZ</button>
+      </div>
+    </div>
   </div>
 </header>
 
 <main>
-  <!-- HERO -->
   <section class="hero" style="border-top:none">
     <div class="wrap">
-      <div class="boot fade d1">
-        <span class="blip"></span> node.status = ONLINE // открыт к задачам
-      </div>
+      <div class="boot fade d1"><span class="blip"></span> <span data-i18n="boot">node.status = ONLINE // открыт к задачам</span></div>
       <h1 class="glitch fade d1" data-text="Nemo">Nemo</h1>
-      <p class="lede fade d2">
-        Python-разработчик. Строю <b>ботов</b> (Telegram, Discord и др.), <b>пайплайны автоматизации</b> и <b>бэкенды на FastAPI</b> — от идеи до сервиса, который крутится в проде сам.
-      </p>
+      <p class="lede fade d2" data-i18n="lede">Python-разработчик. Строю <b>ботов</b> (Telegram, Discord и др.), <b>пайплайны автоматизации</b> и <b>бэкенды на FastAPI</b> — от идеи до сервиса, который крутится в проде сам.</p>
       <div class="meta fade d3">
-        <span><i>&gt;</i> focus: боты · автоматизация · AI</span>
-        <span><i>&gt;</i> core: Python / FastAPI / aiogram</span>
-        <span><i>&gt;</i> self-hosted: true</span>
+        <span><i>&gt;</i> <span data-i18n="meta1">focus: боты · автоматизация · AI</span></span>
+        <span><i>&gt;</i> <span data-i18n="meta2">core: Python / FastAPI / aiogram</span></span>
+        <span><i>&gt;</i> <span data-i18n="meta3">self-hosted: true</span></span>
       </div>
     </div>
   </section>
 
-  <!-- MODULES -->
   <section id="build">
     <div class="wrap">
-      <div class="sec-head">
-        <span class="idx mono">01</span>
-        <h2>Модули<span class="slash"> // </span>что делаю</h2>
-      </div>
+      <div class="sec-head"><span class="idx mono">01</span><h2><span data-i18n="sec_mod_a">Модули</span><span class="slash"> // </span><span data-i18n="sec_mod_b">что делаю</span></h2></div>
       <div class="modules">
-        <div class="mod">
-          <span class="k mono">./bots</span>
-          <h3>Боты</h3>
-          <p>Боты для Telegram, Discord и других площадок: от утилит до многопользовательских сервисов с базой, платежами, ролями и планировщиком.</p>
-          <div class="tags"><span class="tag">Telegram</span><span class="tag">Discord</span><span class="tag">SQLAlchemy</span><span class="tag">APScheduler</span></div>
-        </div>
-        <div class="mod">
-          <span class="k mono">./automation</span>
-          <h3>Автоматизация · парсинг</h3>
-          <p>Скрипты и пайплайны, что делают рутину за тебя: сбор данных, парсинг сайтов, обработка по расписанию, работа с браузером.</p>
-          <div class="tags"><span class="tag">Playwright</span><span class="tag">APScheduler</span><span class="tag">aiosqlite</span></div>
-        </div>
-        <div class="mod">
-          <span class="k mono">./backend</span>
-          <h3>FastAPI-бэкенды</h3>
-          <p>REST API и бэкенды под ботов и веб. Асинхронно, с вменяемой структурой и нормальной работой с базой.</p>
-          <div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLAlchemy async</span></div>
-        </div>
-        <div class="mod">
-          <span class="k mono">./ai_media</span>
-          <h3>AI-агенты · медиа</h3>
-          <p>Интеграции с Claude API и обработка медиа: транскрипция аудио, синтез речи, сборка и монтаж видео под задачу.</p>
-          <div class="tags"><span class="tag">Claude API</span><span class="tag">faster-whisper</span><span class="tag">edge-tts</span><span class="tag">MoviePy</span></div>
-        </div>
+        <div class="mod"><span class="k mono">./bots</span><h3 data-i18n="mod1_h">Боты</h3><p data-i18n="mod1_p">Боты для Telegram, Discord и других площадок: от утилит до многопользовательских сервисов с базой, платежами, ролями и планировщиком.</p><div class="tags"><span class="tag">Telegram</span><span class="tag">Discord</span><span class="tag">SQLAlchemy</span><span class="tag">APScheduler</span></div></div>
+        <div class="mod"><span class="k mono">./automation</span><h3 data-i18n="mod2_h">Автоматизация · парсинг</h3><p data-i18n="mod2_p">Скрипты и пайплайны, что делают рутину за тебя: сбор данных, парсинг сайтов, обработка по расписанию, работа с браузером.</p><div class="tags"><span class="tag">Playwright</span><span class="tag">APScheduler</span><span class="tag">aiosqlite</span></div></div>
+        <div class="mod"><span class="k mono">./backend</span><h3 data-i18n="mod3_h">FastAPI-бэкенды</h3><p data-i18n="mod3_p">REST API и бэкенды под ботов и веб. Асинхронно, с вменяемой структурой и нормальной работой с базой.</p><div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLAlchemy async</span></div></div>
+        <div class="mod"><span class="k mono">./ai_media</span><h3 data-i18n="mod4_h">AI-агенты · медиа</h3><p data-i18n="mod4_p">Интеграции с Claude API и обработка медиа: транскрипция аудио, синтез речи, сборка и монтаж видео под задачу.</p><div class="tags"><span class="tag">Claude API</span><span class="tag">faster-whisper</span><span class="tag">edge-tts</span><span class="tag">MoviePy</span></div></div>
       </div>
     </div>
   </section>
 
-  <!-- STACK -->
   <section id="stack">
     <div class="wrap">
-      <div class="sec-head">
-        <span class="idx mono">02</span>
-        <h2>Стек<span class="slash"> // </span>инструменты</h2>
-      </div>
+      <div class="sec-head"><span class="idx mono">02</span><h2><span data-i18n="sec_stack_a">Стек</span><span class="slash"> // </span><span data-i18n="sec_stack_b">инструменты</span></h2></div>
       <div class="stack-grid">
-        <div class="stack-group"><div class="g-label">язык · фреймворки</div><ul><li>Python</li><li>FastAPI</li><li>aiogram 3.x</li></ul></div>
-        <div class="stack-group"><div class="g-label">данные</div><ul><li>SQLAlchemy (async)</li><li>aiosqlite</li></ul></div>
-        <div class="stack-group"><div class="g-label">автоматизация</div><ul><li>APScheduler</li><li>Playwright</li></ul></div>
-        <div class="stack-group"><div class="g-label">ai · медиа</div><ul><li>Claude API</li><li>faster-whisper</li><li>edge-tts</li><li>MoviePy</li></ul></div>
-        <div class="stack-group"><div class="g-label">инфраструктура</div><ul><li>Raspberry Pi</li><li>WireGuard</li><li>self-hosted</li></ul></div>
+        <div class="stack-group"><div class="g-label" data-i18n="stg1">язык · фреймворки</div><ul><li>Python</li><li>FastAPI</li><li>aiogram 3.x</li></ul></div>
+        <div class="stack-group"><div class="g-label" data-i18n="stg2">данные</div><ul><li>SQLAlchemy (async)</li><li>aiosqlite</li></ul></div>
+        <div class="stack-group"><div class="g-label" data-i18n="stg3">автоматизация</div><ul><li>APScheduler</li><li>Playwright</li></ul></div>
+        <div class="stack-group"><div class="g-label" data-i18n="stg4">ai · медиа</div><ul><li>Claude API</li><li>faster-whisper</li><li>edge-tts</li><li>MoviePy</li></ul></div>
+        <div class="stack-group"><div class="g-label" data-i18n="stg5">инфраструктура</div><ul><li>Raspberry Pi</li><li>WireGuard</li><li>self-hosted</li></ul></div>
       </div>
     </div>
   </section>
 
-  <!-- APPROACH -->
   <section id="approach">
     <div class="wrap">
-      <div class="sec-head">
-        <span class="idx mono">03</span>
-        <h2>Протокол<span class="slash"> // </span>как работаю</h2>
-      </div>
+      <div class="sec-head"><span class="idx mono">03</span><h2><span data-i18n="sec_ap_a">Протокол</span><span class="slash"> // </span><span data-i18n="sec_ap_b">как работаю</span></h2></div>
       <div class="approach">
-        <div class="ap"><span class="n mono">&gt; 01</span><h4>Самоучка на практике</h4><p>Учусь на реальных проектах, а не на бесконечных туториалах. Каждая штука в стеке — из живой задачи.</p></div>
-        <div class="ap"><span class="n mono">&gt; 02</span><h4>Довожу до рабочего</h4><p>Цель — не демка, а сервис, что запущен и работает. Асинхронность по умолчанию, чистая структура.</p></div>
-        <div class="ap"><span class="n mono">&gt; 03</span><h4>Держу инфру сам</h4><p>Свой self-hosted хостинг, деплой, сеть. Понимаю путь от кода до железа, а не только уровень библиотек.</p></div>
+        <div class="ap"><span class="n mono">&gt; 01</span><h4 data-i18n="ap1_h">Самоучка на практике</h4><p data-i18n="ap1_p">Учусь на реальных проектах, а не на бесконечных туториалах. Каждая штука в стеке — из живой задачи.</p></div>
+        <div class="ap"><span class="n mono">&gt; 02</span><h4 data-i18n="ap2_h">Довожу до рабочего</h4><p data-i18n="ap2_p">Цель — не демка, а сервис, что запущен и работает. Асинхронность по умолчанию, чистая структура.</p></div>
+        <div class="ap"><span class="n mono">&gt; 03</span><h4 data-i18n="ap3_h">Держу инфру сам</h4><p data-i18n="ap3_p">Свой self-hosted хостинг, деплой, сеть. Понимаю путь от кода до железа, а не только уровень библиотек.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="wrap">
-      <div class="sec-head">
-        <span class="idx mono">04</span>
-        <h2>Связь<span class="slash"> // </span>контакт</h2>
-      </div>
+      <div class="sec-head"><span class="idx mono">04</span><h2><span data-i18n="sec_ct_a">Связь</span><span class="slash"> // </span><span data-i18n="sec_ct_b">контакт</span></h2></div>
       <div class="contact-box">
-        <p>Нужен бот, автоматизация или бэкенд? Скинь задачу — прикину, как сделать и в какие сроки.</p>
+        <p data-i18n="contact_p">Нужен бот, автоматизация или бэкенд? Скинь задачу — прикину, как сделать и в какие сроки.</p>
         <div class="links">
-          <a class="lnk reviews" href="https://t.me/+-LIFvifJw8QzYWRi" target="_blank" rel="noopener"><span class="arw">★</span> канал с отзывами</a>
-          <a class="lnk" href="https://t.me/Im_notundestend" target="_blank" rel="noopener"><span class="arw">↗</span> Telegram · @Im_notundestend</a>
+          <a class="lnk reviews" href="https://t.me/+-LIFvifJw8QzYWRi" target="_blank" rel="noopener"><span class="arw">&#9733;</span> <span data-i18n="link_reviews">канал с отзывами</span></a>
+          <a class="lnk" href="https://t.me/Im_notundestend" target="_blank" rel="noopener"><span class="arw">&#8599;</span> Telegram · @Im_notundestend</a>
         </div>
-        <p style="margin-top:20px; font-family:'Share Tech Mono',monospace; font-size:12.5px; color:var(--dim); letter-spacing:0.02em;">
-          &gt; не берусь за спам, накрутки и всё, что нарушает правила площадки или закон
-        </p>
+        <p style="margin-top:20px; font-family:'Share Tech Mono',monospace; font-size:12.5px; color:var(--dim); letter-spacing:0.02em;" data-i18n="policy">&gt; не берусь за спам, накрутки и всё, что нарушает правила площадки или закон</p>
       </div>
     </div>
   </section>
@@ -429,11 +197,128 @@
 
 <footer>
   <div class="wrap foot">
-    <span>© <span id="yr"></span> oustalker <b>//</b> dev.node</span>
+    <span>&copy; <span id="yr"></span> Nemo <b>//</b> dev.node</span>
     <span>built &amp; hosted by hand</span>
   </div>
 </footer>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+  var I18N = {
+    ru: {
+      nav_modules:"[ модули ]", nav_stack:"[ стек ]", nav_price:"[ прайс ]", nav_history:"[ история ]", nav_faq:"[ faq ]", nav_contact:"[ связь ]",
+      boot:"node.status = ONLINE // открыт к задачам",
+      lede:"Python-разработчик. Строю <b>ботов</b> (Telegram, Discord и др.), <b>пайплайны автоматизации</b> и <b>бэкенды на FastAPI</b> — от идеи до сервиса, который крутится в проде сам.",
+      meta1:"focus: боты · автоматизация · AI", meta2:"core: Python / FastAPI / aiogram", meta3:"self-hosted: true",
+      sec_mod_a:"Модули", sec_mod_b:"что делаю",
+      mod1_h:"Боты", mod1_p:"Боты для Telegram, Discord и других площадок: от утилит до многопользовательских сервисов с базой, платежами, ролями и планировщиком.",
+      mod2_h:"Автоматизация · парсинг", mod2_p:"Скрипты и пайплайны, что делают рутину за тебя: сбор данных, парсинг сайтов, обработка по расписанию, работа с браузером.",
+      mod3_h:"FastAPI-бэкенды", mod3_p:"REST API и бэкенды под ботов и веб. Асинхронно, с вменяемой структурой и нормальной работой с базой.",
+      mod4_h:"AI-агенты · медиа", mod4_p:"Интеграции с Claude API и обработка медиа: транскрипция аудио, синтез речи, сборка и монтаж видео под задачу.",
+      sec_stack_a:"Стек", sec_stack_b:"инструменты",
+      stg1:"язык · фреймворки", stg2:"данные", stg3:"автоматизация", stg4:"ai · медиа", stg5:"инфраструктура",
+      sec_ap_a:"Протокол", sec_ap_b:"как работаю",
+      ap1_h:"Самоучка на практике", ap1_p:"Учусь на реальных проектах, а не на бесконечных туториалах. Каждая штука в стеке — из живой задачи.",
+      ap2_h:"Довожу до рабочего", ap2_p:"Цель — не демка, а сервис, что запущен и работает. Асинхронность по умолчанию, чистая структура.",
+      ap3_h:"Держу инфру сам", ap3_p:"Свой self-hosted хостинг, деплой, сеть. Понимаю путь от кода до железа, а не только уровень библиотек.",
+      sec_ct_a:"Связь", sec_ct_b:"контакт",
+      contact_p:"Нужен бот, автоматизация или бэкенд? Скинь задачу — прикину, как сделать и в какие сроки.",
+      link_reviews:"канал с отзывами", policy:"&gt; не берусь за спам, накрутки и всё, что нарушает правила площадки или закон"
+    },
+    uk: {
+      nav_modules:"[ модулі ]", nav_stack:"[ стек ]", nav_price:"[ прайс ]", nav_history:"[ історія ]", nav_faq:"[ faq ]", nav_contact:"[ зв'язок ]",
+      boot:"node.status = ONLINE // відкритий до завдань",
+      lede:"Python-розробник. Створюю <b>ботів</b> (Telegram, Discord тощо), <b>пайплайни автоматизації</b> та <b>бекенди на FastAPI</b> — від ідеї до сервісу, що працює в проді сам.",
+      meta1:"focus: боти · автоматизація · AI", meta2:"core: Python / FastAPI / aiogram", meta3:"self-hosted: true",
+      sec_mod_a:"Модулі", sec_mod_b:"що роблю",
+      mod1_h:"Боти", mod1_p:"Боти для Telegram, Discord та інших платформ: від утиліт до багатокористувацьких сервісів з базою, платежами, ролями та планувальником.",
+      mod2_h:"Автоматизація · парсинг", mod2_p:"Скрипти та пайплайни, що роблять рутину за тебе: збір даних, парсинг сайтів, обробка за розкладом, робота з браузером.",
+      mod3_h:"FastAPI-бекенди", mod3_p:"REST API та бекенди для ботів і вебу. Асинхронно, зі зрозумілою структурою та нормальною роботою з базою.",
+      mod4_h:"AI-агенти · медіа", mod4_p:"Інтеграції з Claude API та обробка медіа: транскрипція аудіо, синтез мовлення, збірка та монтаж відео під задачу.",
+      sec_stack_a:"Стек", sec_stack_b:"інструменти",
+      stg1:"мова · фреймворки", stg2:"дані", stg3:"автоматизація", stg4:"ai · медіа", stg5:"інфраструктура",
+      sec_ap_a:"Протокол", sec_ap_b:"як працюю",
+      ap1_h:"Самоучка на практиці", ap1_p:"Вчуся на реальних проєктах, а не на нескінченних туторіалах. Кожна річ у стеку — з живої задачі.",
+      ap2_h:"Доводжу до робочого", ap2_p:"Мета — не демка, а сервіс, що запущений і працює. Асинхронність за замовчуванням, чиста структура.",
+      ap3_h:"Тримаю інфру сам", ap3_p:"Власний self-hosted хостинг, деплой, мережа. Розумію шлях від коду до заліза, а не лише рівень бібліотек.",
+      sec_ct_a:"Зв'язок", sec_ct_b:"контакт",
+      contact_p:"Потрібен бот, автоматизація чи бекенд? Скинь задачу — прикину, як зробити і в які терміни.",
+      link_reviews:"канал з відгуками", policy:"&gt; не беруся за спам, накрутки та все, що порушує правила платформи або закон"
+    },
+    en: {
+      nav_modules:"[ modules ]", nav_stack:"[ stack ]", nav_price:"[ pricing ]", nav_history:"[ story ]", nav_faq:"[ faq ]", nav_contact:"[ contact ]",
+      boot:"node.status = ONLINE // open to work",
+      lede:"Python developer. I build <b>bots</b> (Telegram, Discord and more), <b>automation pipelines</b> and <b>FastAPI backends</b> — from idea to a service that runs itself in production.",
+      meta1:"focus: bots · automation · AI", meta2:"core: Python / FastAPI / aiogram", meta3:"self-hosted: true",
+      sec_mod_a:"Modules", sec_mod_b:"what I do",
+      mod1_h:"Bots", mod1_p:"Bots for Telegram, Discord and other platforms: from small utilities to multi-user services with a database, payments, roles and a scheduler.",
+      mod2_h:"Automation · scraping", mod2_p:"Scripts and pipelines that handle the routine for you: data collection, website scraping, scheduled processing, browser automation.",
+      mod3_h:"FastAPI backends", mod3_p:"REST APIs and backends for bots and web. Async, with a sane structure and proper database handling.",
+      mod4_h:"AI agents · media", mod4_p:"Claude API integrations and media processing: audio transcription, speech synthesis, video assembly and editing for the task.",
+      sec_stack_a:"Stack", sec_stack_b:"tools",
+      stg1:"language · frameworks", stg2:"data", stg3:"automation", stg4:"ai · media", stg5:"infrastructure",
+      sec_ap_a:"Protocol", sec_ap_b:"how I work",
+      ap1_h:"Self-taught in practice", ap1_p:"I learn on real projects, not endless tutorials. Every tool in the stack comes from an actual task.",
+      ap2_h:"I ship working results", ap2_p:"The goal isn't a demo but a service that's live and working. Async by default, clean structure.",
+      ap3_h:"I run my own infra", ap3_p:"My own self-hosted infrastructure, deployment, network. I understand the path from code to hardware, not just the library level.",
+      sec_ct_a:"Contact", sec_ct_b:"get in touch",
+      contact_p:"Need a bot, automation or a backend? Send over the task — I'll estimate how and how fast.",
+      link_reviews:"reviews channel", policy:"&gt; I don't take on spam, fake engagement or anything that breaks platform rules or the law"
+    },
+    kz: {
+      nav_modules:"[ модульдер ]", nav_stack:"[ стек ]", nav_price:"[ баға ]", nav_history:"[ тарих ]", nav_faq:"[ faq ]", nav_contact:"[ байланыс ]",
+      boot:"node.status = ONLINE // тапсырмаларға ашық",
+      lede:"Python әзірлеушісі. <b>Боттар</b> (Telegram, Discord және т.б.), <b>автоматтандыру пайплайндарын</b> және <b>FastAPI бэкендтерін</b> жасаймын — идеядан өзі жұмыс істейтін сервиске дейін.",
+      meta1:"focus: боттар · автоматтандыру · AI", meta2:"core: Python / FastAPI / aiogram", meta3:"self-hosted: true",
+      sec_mod_a:"Модульдер", sec_mod_b:"не істеймін",
+      mod1_h:"Боттар", mod1_p:"Telegram, Discord және басқа платформаларға арналған боттар: шағын утилиталардан бастап дерекқоры, төлемдері, рөлдері мен жоспарлағышы бар көппайдаланушылық сервистерге дейін.",
+      mod2_h:"Автоматтандыру · парсинг", mod2_p:"Рутинаны сенің орныңа істейтін скриптер мен пайплайндар: деректер жинау, сайттарды парсинг жасау, кесте бойынша өңдеу, браузермен жұмыс.",
+      mod3_h:"FastAPI бэкендтері", mod3_p:"Боттар мен веб үшін REST API және бэкендтер. Асинхронды, түсінікті құрылымымен және дерекқормен дұрыс жұмыс істейді.",
+      mod4_h:"AI-агенттер · медиа", mod4_p:"Claude API интеграциялары және медиа өңдеу: аудио транскрипциясы, сөйлеу синтезі, тапсырмаға сай бейне жинау және монтаждау.",
+      sec_stack_a:"Стек", sec_stack_b:"құралдар",
+      stg1:"тіл · фреймворктер", stg2:"деректер", stg3:"автоматтандыру", stg4:"ai · медиа", stg5:"инфрақұрылым",
+      sec_ap_a:"Протокол", sec_ap_b:"қалай жұмыс істеймін",
+      ap1_h:"Тәжірибедегі өзін-өзі оқытушы", ap1_p:"Шексіз туториалдардан емес, нақты жобаларда үйренемін. Стектегі әрбір құрал — нақты тапсырмадан.",
+      ap2_h:"Жұмыс істейтін нәтижеге жеткіземін", ap2_p:"Мақсат — демо емес, іске қосылып, жұмыс істеп тұрған сервис. Әдепкі бойынша асинхрондылық, таза құрылым.",
+      ap3_h:"Инфрақұрылымды өзім ұстаймын", ap3_p:"Өзімнің self-hosted хостингім, деплой, желі. Тек кітапхана деңгейін ғана емес, кодтан темірге дейінгі жолды түсінемін.",
+      sec_ct_a:"Байланыс", sec_ct_b:"хабарласу",
+      contact_p:"Бот, автоматтандыру немесе бэкенд керек пе? Тапсырманы жіберіңіз — қалай және қанша уақытта істейтінімді бағалаймын.",
+      link_reviews:"пікірлер арнасы", policy:"&gt; спаммен, жалған белсенділікпен және платформа ережелерін не заңды бұзатын нәрселермен айналыспаймын"
+    }
+  };
+
+  function applyLang(lang){
+    if(!I18N[lang]) lang = "ru";
+    var dict = I18N[lang];
+    document.documentElement.lang = (lang==="kz"?"kk":lang);
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var v = dict[el.getAttribute("data-i18n")];
+      if(v!=null) el.innerHTML = v;
+    });
+    document.querySelectorAll("#lang button").forEach(function(b){
+      b.classList.toggle("active", b.getAttribute("data-lang")===lang);
+    });
+    document.querySelectorAll("a.page").forEach(function(a){
+      var base = a.getAttribute("href").split("?")[0];
+      a.setAttribute("href", base + "?lang=" + lang);
+    });
+    try { history.replaceState(null,"", "?lang="+lang + location.hash); } catch(e){}
+  }
+
+  function detectLang(){
+    var p = new URLSearchParams(location.search).get("lang");
+    if(p && I18N[p]) return p;
+    var n = (navigator.language||"ru").toLowerCase();
+    if(n.indexOf("uk")===0) return "uk";
+    if(n.indexOf("kk")===0 || n.indexOf("kz")===0) return "kz";
+    if(n.indexOf("en")===0) return "en";
+    return "ru";
+  }
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  document.querySelectorAll("#lang button").forEach(function(b){
+    b.addEventListener("click", function(){ applyLang(b.getAttribute("data-lang")); });
+  });
+  applyLang(detectLang());
+</script>
 </body>
 </html>
