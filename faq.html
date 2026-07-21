@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>oustalker // faq</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:#08060f; --bg-2:#0d0918; --panel:rgba(22,14,38,0.55);
+    --line:#241734; --line-hot:#3a2352;
+    --text:#E9E4F4; --muted:#9184ad; --dim:#61567c;
+    --magenta:#FF2D95; --cyan:#26E0E6; --yellow:#F5D90A;
+    --maxw:820px;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--bg); color:var(--text);
+    font-family:"IBM Plex Sans",system-ui,sans-serif; line-height:1.65;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  body::after {
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(60% 40% at 12% 0%, rgba(255,45,149,0.10), transparent 60%),
+      radial-gradient(50% 45% at 92% 12%, rgba(38,224,230,0.09), transparent 60%);
+  }
+  body::before {
+    content:""; position:fixed; inset:0; z-index:40; pointer-events:none;
+    background:repeating-linear-gradient(to bottom,
+      rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.16) 3px, rgba(0,0,0,0) 4px);
+    mix-blend-mode:multiply; opacity:0.5;
+  }
+  .wrap { position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:0 26px; }
+  .mono { font-family:"Share Tech Mono",monospace; }
+
+  header {
+    position:sticky; top:0; z-index:30; backdrop-filter:blur(6px);
+    background:rgba(8,6,15,0.78); border-bottom:1px solid var(--line);
+  }
+  .nav { display:flex; align-items:center; justify-content:space-between; height:56px; }
+  .brand {
+    font-family:"Chakra Petch",sans-serif; font-weight:700; font-size:16px;
+    letter-spacing:0.04em; text-shadow:0 0 12px rgba(255,45,149,0.5);
+    text-decoration:none; color:var(--text);
+  }
+  .brand b { color:var(--magenta); }
+  .hnav { display:flex; gap:20px; align-items:center; }
+  .hnav a {
+    font-family:"Share Tech Mono",monospace; font-size:13px; letter-spacing:0.05em;
+    color:var(--dim); text-decoration:none; transition:color .16s, text-shadow .16s;
+  }
+  .hnav a:hover { color:var(--cyan); text-shadow:0 0 10px rgba(38,224,230,0.6); }
+  @media (max-width:560px){ .hnav a.opt { display:none; } }
+
+  .hero { padding:70px 0 40px; }
+  .boot {
+    font-family:"Share Tech Mono",monospace; font-size:13px; color:var(--cyan);
+    letter-spacing:0.05em; margin-bottom:24px; display:flex; align-items:center; gap:10px;
+  }
+  .blip {
+    width:9px; height:9px; background:var(--magenta);
+    box-shadow:0 0 10px var(--magenta),0 0 20px var(--magenta); animation:flick 1.6s infinite;
+  }
+  @keyframes flick { 0%,100%{opacity:1} 45%{opacity:.35} 50%{opacity:1} }
+  .glitch {
+    font-family:"Chakra Petch",sans-serif; font-weight:700;
+    font-size:clamp(42px,8vw,80px); line-height:0.95; letter-spacing:-0.02em;
+    position:relative; color:var(--text); margin-bottom:20px;
+    text-shadow:0 0 18px rgba(233,228,244,0.15);
+  }
+  .glitch::before,.glitch::after {
+    content:attr(data-text); position:absolute; left:0; top:0; width:100%; height:100%; overflow:hidden;
+  }
+  .glitch::before { color:var(--magenta); clip-path:inset(0 0 55% 0); transform:translate(-2px,-1px); animation:gl-top 3.4s infinite steps(2); mix-blend-mode:screen; }
+  .glitch::after  { color:var(--cyan);    clip-path:inset(52% 0 0 0); transform:translate(2px,1px);  animation:gl-bot 2.8s infinite steps(2); mix-blend-mode:screen; }
+  @keyframes gl-top { 0%,92%,100%{transform:translate(-2px,-1px)} 93%{transform:translate(3px,-2px)} 96%{transform:translate(-4px,0)} }
+  @keyframes gl-bot { 0%,90%,100%{transform:translate(2px,1px)} 91%{transform:translate(-3px,2px)} 95%{transform:translate(4px,0)} }
+  .lede { font-size:clamp(15px,2.2vw,18px); color:#c8c1dc; max-width:600px; }
+
+  section { padding:44px 0; border-top:1px solid var(--line); }
+
+  /* ---------- accordion ---------- */
+  .faq-item {
+    border:1px solid var(--line-hot); background:var(--panel); margin-bottom:10px;
+    transition:border-color .18s, box-shadow .18s;
+  }
+  .faq-item[open] { border-color:var(--magenta); box-shadow:0 0 22px rgba(255,45,149,0.10); }
+  summary {
+    cursor:pointer; list-style:none; padding:17px 20px;
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+    font-family:"Chakra Petch",sans-serif; font-weight:600; font-size:16px; color:var(--text);
+  }
+  summary::-webkit-details-marker { display:none; }
+  summary .qwrap { display:flex; gap:11px; align-items:baseline; }
+  summary .qm { font-family:"Share Tech Mono",monospace; color:var(--cyan); font-size:13px; }
+  summary .plus { font-family:"Share Tech Mono",monospace; color:var(--magenta); font-size:22px; line-height:1; transition:transform .2s; flex:none; }
+  .faq-item[open] summary .plus { transform:rotate(45deg); }
+  .faq-a { padding:0 20px 18px 43px; font-size:14.5px; color:#c3bcd6; }
+  .faq-a b { color:var(--text); }
+  .faq-a a { color:var(--cyan); text-decoration:none; border-bottom:1px solid var(--line-hot); }
+
+  /* ---------- cta ---------- */
+  .cta {
+    border:1px solid var(--line-hot);
+    background:linear-gradient(180deg, rgba(255,45,149,0.05), rgba(38,224,230,0.03));
+    padding:32px 28px; text-align:center;
+  }
+  .cta h3 { font-family:"Chakra Petch",sans-serif; font-weight:600; font-size:21px; margin-bottom:10px; }
+  .cta p { color:#c3bcd6; font-size:15px; max-width:480px; margin:0 auto 20px; }
+  .links { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+  .lnk {
+    font-family:"Share Tech Mono",monospace; font-size:14px; color:var(--text);
+    text-decoration:none; border:1px solid var(--line-hot); padding:11px 18px;
+    display:inline-flex; align-items:center; gap:9px;
+    transition:border-color .16s, box-shadow .16s, color .16s;
+  }
+  .lnk:hover { border-color:var(--cyan); color:var(--cyan); box-shadow:0 0 18px rgba(38,224,230,0.2); }
+  .lnk .arw { color:var(--magenta); }
+  .lnk.reviews { border-color:var(--magenta); }
+  .lnk.reviews:hover { box-shadow:0 0 18px rgba(255,45,149,0.22); color:var(--magenta); border-color:var(--magenta); }
+
+  footer { border-top:1px solid var(--line); padding:26px 0 44px; }
+  .foot {
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+    font-family:"Share Tech Mono",monospace; font-size:12.5px; color:var(--dim); letter-spacing:0.05em;
+  }
+  .foot b { color:var(--magenta); }
+
+  @media (prefers-reduced-motion:reduce){
+    .glitch::before,.glitch::after,.blip { animation:none; }
+    .glitch::before,.glitch::after { clip-path:none; transform:none; opacity:0; }
+    html { scroll-behavior:auto; }
+  }
+  :focus-visible { outline:2px solid var(--cyan); outline-offset:3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><b>//</b> oustalker</a>
+    <nav class="hnav">
+      <a class="opt" href="price.html">[ прайс ]</a>
+      <a class="opt" href="history.html">[ история ]</a>
+      <a href="index.html">← главная</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" style="border-top:none">
+    <div class="wrap">
+      <div class="boot"><span class="blip"></span> faq.load() // частые вопросы</div>
+      <h1 class="glitch" data-text="FAQ">FAQ</h1>
+      <p class="lede">
+        Короткие ответы на то, что чаще всего спрашивают до старта. Нет твоего вопроса — просто напиши.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> Сколько стоит бот или проект?</span><span class="plus">+</span></summary>
+        <div class="faq-a">Зависит от задачи. Базовые ориентиры — на странице <a href="price.html">прайса</a>, все цены «от». Точную сумму называю после того, как разберёмся в объёме и логике. Оценка бесплатная.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> Какие сроки?</span><span class="plus">+</span></summary>
+        <div class="faq-a">Простой бот — обычно <b>1–3 дня</b>, проект с базой и логикой — от недели. Точный срок зависит от сложности и загрузки; фиксирую его до старта, чтобы не было сюрпризов.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> Под какие площадки делаешь ботов?</span><span class="plus">+</span></summary>
+        <div class="faq-a">Telegram, Discord и другие площадки. Если не уверен, реально ли то, что ты задумал, — опиши задачу, скажу сразу.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> Можно без готового ТЗ?</span><span class="plus">+</span></summary>
+        <div class="faq-a">Да. Помогу сформулировать задачу из «хочу примерно вот такое». Для размытых или исследовательских задач удобнее почасовая работа.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> Нужна предоплата?</span><span class="plus">+</span></summary>
+        <div class="faq-a">Да, <b>30–50%</b> для старта. Остаток — по факту сдачи рабочего результата, после того как ты всё проверил.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> Кому принадлежит код?</span><span class="plus">+</span></summary>
+        <div class="faq-a">Тебе. После оплаты передаю исходники и все доступы полностью — никакой привязки ко мне.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> Делаешь правки после сдачи?</span><span class="plus">+</span></summary>
+        <div class="faq-a">Да. Мелкие правки по согласованному ТЗ — в рамках заказа. Новые фичи и развитие проекта дальше — по договорённости или в формате поддержки.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> Можешь хостить проект у себя?</span><span class="plus">+</span></summary>
+        <div class="faq-a">Могу разместить на своей инфраструктуре — от <b>$5/мес</b>. Либо разверну на твоём сервере или VPS — это входит в разработку. Подробнее в блоке хостинга на <a href="price.html">прайсе</a>.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> Используешь ИИ в работе?</span><span class="plus">+</span></summary>
+        <div class="faq-a">Да, чтобы работать быстрее. Если разрешаешь — <b>минус 20%</b> к цене. При этом ИИ идёт на рутину и черновики, а код я проверяю и довожу вручную: страдает только срок, не качество.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> За что не берёшься?</span><span class="plus">+</span></summary>
+        <div class="faq-a">За спам, накрутки, обход блокировок и любые схемы, нарушающие правила площадки или закон. Только то, за что не прилетит ни тебе, ни мне.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary><span class="qwrap"><span class="qm">Q:</span> Где посмотреть отзывы?</span><span class="plus">+</span></summary>
+        <div class="faq-a">Отзывы собираю в отдельном Telegram-канале — ссылка ниже в блоке контактов.</div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="cta">
+        <h3>Остался вопрос?</h3>
+        <p>Напиши — отвечу и прикину задачу. А отзывы можно глянуть в канале.</p>
+        <div class="links">
+          <a class="lnk reviews" href="https://t.me/REVIEWS_CHANNEL" target="_blank" rel="noopener"><span class="arw">★</span> канал с отзывами</a>
+          <a class="lnk" href="#" data-edit="telegram"><span class="arw">↗</span> Telegram · @впиши_ник</a>
+          <a class="lnk" href="https://github.com/oustalker" target="_blank" rel="noopener"><span class="arw">↗</span> github.com/oustalker</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="yr"></span> oustalker <b>//</b> faq</span>
+    <span>built &amp; hosted by hand</span>
+  </div>
+</footer>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
